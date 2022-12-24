@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "573418484045",
+    "project_id": "gas-app-ad160",
+    "storage_bucket": "gas-app-ad160.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573418484045:android:81664bab6598271fe84704",
+        "android_client_info": {
+          "package_name": "com.zeroXA.gaspal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573418484045-ta26ni382pman2vfdj3suaf9aqfi26bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeroXA.gaspal",
+            "certificate_hash": "36060686ccf4dcc6213193c9acab7b8eb955b8f5"
+          }
+        },
+        {
+          "client_id": "573418484045-7nnhbbk5q6mvas6v2blalr2461k542hd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfa_rhJRg2wK7AB7O1ng7hNWU6TeBmjW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573418484045-7nnhbbk5q6mvas6v2blalr2461k542hd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
