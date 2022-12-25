@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Hero(
                   tag: "logo",
                   child: Container(
-                    height: 200.0,
+                    height: 260.0,
                     child: Image.asset('images/logo.png'),
                   ),
                 ),
@@ -73,7 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     email = value;
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                      prefixIcon: const Icon(Icons.email, color: Colors.amber),
+                      prefixIcon:
+                          const Icon(Icons.email, color: Color(0xff63cdd7)),
                       hintText: 'Enter your email'),
                 ),
               ),
@@ -98,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     password = value;
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                      prefixIcon: Icon(Icons.lock_open, color: Colors.amber),
+                      prefixIcon:
+                          const Icon(Icons.lock_open, color: Color(0xff63cdd7)),
                       hintText: 'Enter your password'),
                 ),
               ),
@@ -149,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ).show();
                   }
                 }
-              }, Colors.amberAccent, 'Log In'),
+              }, const Color(0xff63cdd7), 'Log In'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -182,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       icon: const Icon(
                         FontAwesomeIcons.google,
-                        color: Colors.amber,
+                        color: Color(0xff63cdd7),
                       ),
                       iconSize: 48,
                     ),

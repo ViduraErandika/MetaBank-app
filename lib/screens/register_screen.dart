@@ -51,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Hero(
                   tag: "logo",
                   child: Container(
-                    height: 200.0,
+                    height: 260.0,
                     child: Image.asset('images/logo.png'),
                   ),
                 ),
@@ -77,7 +77,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     email = value;
                   },
                   decoration: kTextFieldDecoration.copyWith(
-                      prefixIcon: const Icon(Icons.email, color: Colors.amber),
+                      prefixIcon:
+                          const Icon(Icons.email, color: Color(0xff63cdd7)),
                       hintText: 'Enter your email'),
                 ),
               ),
@@ -103,7 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                   decoration: kTextFieldDecoration.copyWith(
                     prefixIcon:
-                        const Icon(Icons.lock_open, color: Colors.amber),
+                        const Icon(Icons.lock_open, color: Color(0xff63cdd7)),
                     hintText: 'Enter your password',
                   ),
                 ),
@@ -159,7 +160,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ).show();
                   }
                 }
-              }, Colors.amberAccent, 'Register'),
+              }, const Color(0xff63cdd7), 'Register'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -193,7 +194,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       },
                       icon: const Icon(
                         FontAwesomeIcons.google,
-                        color: Colors.amber,
+                        color: Color(0xff63cdd7),
                       ),
                       iconSize: 48,
                     ),

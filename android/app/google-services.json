@@ -1,41 +1,128 @@
 {
   "project_info": {
-    "project_number": "573418484045",
-    "project_id": "gas-app-ad160",
-    "storage_bucket": "gas-app-ad160.appspot.com"
+    "project_number": "787167963866",
+    "project_id": "meta-bank-fyp",
+    "storage_bucket": "meta-bank-fyp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:573418484045:android:81664bab6598271fe84704",
+        "mobilesdk_app_id": "1:787167963866:android:0e6a0d1b118564981753e3",
         "android_client_info": {
-          "package_name": "com.zeroXA.gaspal"
+          "package_name": "com.Nike.FirebaseAuthTutorialStarterProject"
         }
       },
       "oauth_client": [
         {
-          "client_id": "573418484045-ta26ni382pman2vfdj3suaf9aqfi26bo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zeroXA.gaspal",
-            "certificate_hash": "36060686ccf4dcc6213193c9acab7b8eb955b8f5"
-          }
-        },
-        {
-          "client_id": "573418484045-7nnhbbk5q6mvas6v2blalr2461k542hd.apps.googleusercontent.com",
+          "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCfa_rhJRg2wK7AB7O1ng7hNWU6TeBmjW4"
+          "current_key": "AIzaSyBjrD5dYUb7LsirnaXanLD3fk0M7NkvlwY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "573418484045-7nnhbbk5q6mvas6v2blalr2461k542hd.apps.googleusercontent.com",
+              "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787167963866:android:c3ff8cd87b50a3f41753e3",
+        "android_client_info": {
+          "package_name": "com.metaxa.metabank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787167963866-4gld43gscpg0cejikqv3n2ahlcr8rss1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metaxa.metabank",
+            "certificate_hash": "36060686ccf4dcc6213193c9acab7b8eb955b8f5"
+          }
+        },
+        {
+          "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrD5dYUb7LsirnaXanLD3fk0M7NkvlwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787167963866:android:941e0264d9c62ae71753e3",
+        "android_client_info": {
+          "package_name": "com.nike.login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrD5dYUb7LsirnaXanLD3fk0M7NkvlwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787167963866:android:fb403396d25653761753e3",
+        "android_client_info": {
+          "package_name": "com.nike.uitest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrD5dYUb7LsirnaXanLD3fk0M7NkvlwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787167963866-lln72k44t6embpsmj606ichg5fe5s7cl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

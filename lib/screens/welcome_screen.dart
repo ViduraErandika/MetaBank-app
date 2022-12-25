@@ -26,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Icon(FontAwesomeIcons.copyright),
             ),
             Text(
-              "ZeroXA  (Pvt) Ltd.",
+              "MetaXA  (Pvt) Ltd.",
               style: GoogleFonts.josefinSans(fontSize: 20),
               textAlign: TextAlign.center,
             ),
@@ -34,7 +34,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -45,17 +45,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   tag: "logo",
                   child: SizedBox(
                     child: Image.asset('images/logo.png'),
-                    height: 130,
+                    height: 350,
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text('Meta-Bank',
-                      style: GoogleFonts.lato(
-                          color: Colors.amber,
-                          fontSize: 55,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1)),
                 ),
               ],
             ),
@@ -71,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   },
                 ),
               );
-            }, Colors.amberAccent, "Log In"),
+            }, const Color(0xff63cdd7), "Log In"),
             RoundedButton(() {
               Navigator.push(
                 context,
@@ -81,7 +72,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   },
                 ),
               );
-            }, Colors.amber, 'Register')
+            }, const Color(0xFF03989e), 'Register')
           ],
         ),
       ),
