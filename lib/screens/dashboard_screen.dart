@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaspal/modules/rounded_button.dart';
+import 'package:gaspal/screens/form_screen.dart';
 import 'package:gaspal/screens/welcome_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -176,7 +177,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
                             subtitle: Text(
-                              '0 / 3 Completed',
+                              '0 / 2 Completed',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -191,7 +192,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return FormScreen();
+                                  },
+                                ));
+                              },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.greenAccent,
                                   elevation: 10,
@@ -199,7 +206,66 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)))),
                               child: const Text(
-                                'Complete profile',
+                                'Edit profile',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontFamily: 'AudioWide',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Card(
+                    color: kSecRed,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            // topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                            bottomLeft: Radius.circular(50))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 13.0, horizontal: 13.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const ListTile(
+                            title: Padding(
+                              padding: EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                'Submit Additional Docs',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontFamily: 'AudioWide',
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 3),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.verified_user,
+                              size: 60,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: kFstred,
+                                  elevation: 10,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)))),
+                              child: const Text(
+                                'Submit Documents',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -217,26 +283,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Any problem contact ",
-                  style: GoogleFonts.josefinSans(fontSize: 20),
-                  textAlign: TextAlign.center,
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 5),
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: kSecBlue,
+                  elevation: 10,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),
+              child: const Text(
+                'Show my avatar',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontFamily: 'AudioWide',
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 14.0),
-                  child: Icon(
-                    FontAwesomeIcons.handPointer,
-                    color: kSecBlue,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ));
