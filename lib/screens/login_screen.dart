@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'form_screen.dart';
+import 'dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   },
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
                   obscureText: true,
                   onChanged: (value) {
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FormScreen(),
+                          builder: (context) => const DashboardScreen(),
                         ));
                   } else {
                     setState(() {
@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FormScreen(),
+                            builder: (context) => DashboardScreen(),
                           ),
                         );
                       },

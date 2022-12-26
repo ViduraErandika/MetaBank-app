@@ -6,7 +6,7 @@ import 'package:gaspal/services/firebase_controller.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'form_screen.dart';
+import 'dashboard_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -130,7 +130,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const FormScreen(),
+                        builder: (context) => const DashboardScreen(),
                       ),
                     );
                   } else {
@@ -188,7 +188,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const FormScreen(),
+                            builder: (context) => const DashboardScreen(),
                           ),
                         );
                       },

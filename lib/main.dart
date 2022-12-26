@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gaspal/screens/form_screen.dart';
+import 'package:gaspal/screens/dashboard_screen.dart';
 import 'package:gaspal/screens/welcome_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
           auth.getUser();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: (auth.firebaseUser == null) ? WelcomeScreen() : FormScreen(),
+            home: (auth.firebaseUser == null)
+                ? WelcomeScreen()
+                : const DashboardScreen(),
           );
         },
       ),

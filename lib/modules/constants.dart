@@ -14,3 +14,7 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kDeepBlue = Color(0xFF050a30);
+const kSecBlue = Color(0xff63cdd7);
+const kThdBlue = Color(0xFF03989e);
