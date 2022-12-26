@@ -149,8 +149,10 @@ class _GrabImageState extends State<GrabImage> {
             enableDrag: false,
             onClosing: () {},
             builder: (context) => Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 15),
+                  padding:
+                      const EdgeInsets.only(top: 10.0, left: 15, bottom: 10),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       ListTile(
                         leading: const Icon(

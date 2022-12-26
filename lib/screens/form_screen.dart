@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/services/grab_image.dart';
+import 'package:signature/signature.dart';
+import 'package:gaspal/modules/constants.dart';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -16,9 +20,20 @@ class _FormScreenState extends State<FormScreen> {
   late int phoneNum;
   late String address;
   late String NIC;
+  Uint8List? signature;
 
-  late String frontImgUrl;
-  late String backImgUrl;
+  SignatureController controller = SignatureController(
+      penStrokeWidth: 3,
+      penColor: kDeepBlue,
+      exportPenColor: Colors.black,
+      exportBackgroundColor: Colors.white);
+
+  @override
+  void dispose() {
+    // IMPORTANT to dispose of the controller
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +146,8 @@ class _FormScreenState extends State<FormScreen> {
                 subtitle: "Submit below details for use in the Metaverse",
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Submit your NIC',
                       style: TextStyle(
                         color: kDeepBlue,
@@ -141,14 +156,14 @@ class _FormScreenState extends State<FormScreen> {
                         fontFamily: 'AudioWide',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     GrabImage(),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
-                    Text(
+                    const Text(
                       'Draw your Signature',
                       style: TextStyle(
                         color: kDeepBlue,
@@ -157,6 +172,58 @@ class _FormScreenState extends State<FormScreen> {
                         fontFamily: 'AudioWide',
                       ),
                     ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Signature(
+                      controller: controller,
+                      width: 350,
+                      height: 200,
+                      backgroundColor: kSecBlue,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              signature = await controller.toPngBytes(
+                                  width: 1000, height: 1000);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  duration: Duration(milliseconds: 500),
+                                  content: Text('Saved',
+                                      style: TextStyle(
+                                        color: kDeepBlue,
+                                        fontSize: 15,
+                                        fontFamily: 'AudioWide',
+                                      )),
+                                ),
+                              );
+                            },
+                            iconSize: 45,
+                            tooltip: 'Save signature',
+                            icon: const Icon(
+                              Icons.check_circle,
+                              color: Colors.lightGreenAccent,
+                              size: 45,
+                            )),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        IconButton(
+                            iconSize: 45,
+                            tooltip: 'Clear signature',
+                            onPressed: () {
+                              controller.clear();
+                            },
+                            icon: const Icon(
+                              Icons.cancel,
+                              color: Colors.redAccent,
+                              size: 45,
+                            ))
+                      ],
+                    )
                   ],
                 ),
                 validation: () {}),

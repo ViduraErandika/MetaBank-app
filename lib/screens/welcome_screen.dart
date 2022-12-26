@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaspal/modules/rounded_button.dart';
@@ -33,48 +35,66 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Hero(
-                  tag: "logo",
-                  child: SizedBox(
-                    child: Image.asset('images/logo.png'),
-                    height: 350,
+      body: Stack(
+        children: [
+          ImageFiltered(
+            imageFilter: ImageFilter.blur(sigmaY: 0, sigmaX: 0),
+            child: Opacity(
+              opacity: 0.3,
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('images/bg.jpg'),
+                    fit: BoxFit.cover,
                   ),
                 ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Hero(
+                      tag: "logo",
+                      child: SizedBox(
+                        child: Image.asset('images/logo.png'),
+                        height: 350,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 48.0,
+                ),
+                RoundedButton(() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return LoginScreen();
+                      },
+                    ),
+                  );
+                }, const Color(0xff63cdd7), "Log In"),
+                RoundedButton(() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return RegistrationScreen();
+                      },
+                    ),
+                  );
+                }, const Color(0xFF03989e), 'Register')
               ],
             ),
-            const SizedBox(
-              height: 48.0,
-            ),
-            RoundedButton(() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
-                ),
-              );
-            }, const Color(0xff63cdd7), "Log In"),
-            RoundedButton(() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return RegistrationScreen();
-                  },
-                ),
-              );
-            }, const Color(0xFF03989e), 'Register')
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
