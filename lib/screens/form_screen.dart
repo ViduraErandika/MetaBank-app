@@ -79,7 +79,7 @@ class _FormScreenState extends State<FormScreen> {
                 ),
               ),
             );
-            provider.getUser();
+            await provider.getUser();
             String userId = provider.firebaseUser!.uid;
             if (firstName != null &&
                 lastName != null &&
@@ -101,7 +101,9 @@ class _FormScreenState extends State<FormScreen> {
               provider.updateAccInfo(userId, 'sign', signature!.toString());
             }
             BlockUi.hide(context);
-            Navigator.of(context).pop();
+            Future.delayed(const Duration(milliseconds: 200), () {
+              Navigator.of(context).pop();
+            });
           },
           config: const CoolStepperConfig(
               icon: Icon(null),
