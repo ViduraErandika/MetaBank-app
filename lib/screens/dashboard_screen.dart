@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:block_ui/block_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaspal/modules/rounded_button.dart';
@@ -305,10 +306,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 5),
             child: ElevatedButton(
               onPressed: () async {
+                BlockUi.show(
+                  context,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            child: const Text("Loading..",
+                                style: TextStyle(
+                                  color: kDeepBlue,
+                                  fontSize: 20,
+                                  fontFamily: 'AudioWide',
+                                ))),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        CircularProgressIndicator(),
+                      ],
+                    ),
+                  ),
+                );
                 provider.getUser();
                 String userId = provider.firebaseUser!.uid;
                 String? avatarUrl = await provider.getAvatarUrl(userId);
-                print(avatarUrl);
+                BlockUi.hide(context);
                 if (avatarUrl != '') {
                   Navigator.push(
                       context,

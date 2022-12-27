@@ -98,9 +98,23 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     Container(
                       color: kDeepBlue,
                     ),
-                    const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.teal,
+                    Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              child: const Text("Loading..",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: 'AudioWide',
+                                  ))),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CircularProgressIndicator(),
+                        ],
                       ),
                     ),
                   ],

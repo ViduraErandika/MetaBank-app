@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:io';
+import 'package:block_ui/block_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:gaspal/modules/constants.dart';
@@ -51,6 +52,33 @@ class _FormScreenState extends State<FormScreen> {
         ),
         body: CoolStepper(
           onCompleted: () async {
+            BlockUi.show(
+              context,
+              child: Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        child: const Text("Saving..",
+                            style: TextStyle(
+                              color: kDeepBlue,
+                              fontSize: 20,
+                              fontFamily: 'AudioWide',
+                            ))),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
             provider.getUser();
             String userId = provider.firebaseUser!.uid;
             if (firstName != null &&
@@ -72,6 +100,7 @@ class _FormScreenState extends State<FormScreen> {
                   userId, '${userId}_NICBack', File(provider.backImgUrl!));
               provider.updateAccInfo(userId, 'sign', signature!.toString());
             }
+            BlockUi.hide(context);
             Navigator.of(context).pop();
           },
           config: const CoolStepperConfig(
