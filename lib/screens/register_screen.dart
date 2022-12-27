@@ -200,7 +200,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             await provider.googleLogIn();
                             await provider.getUser();
                             String userId = provider.firebaseUser!.uid;
-                            bool check = await provider.checkDoc(userId);
+                            bool check =
+                                await provider.checkDoc('users', userId);
                             if (!check) {
                               provider.createData(userId, "verified", "true");
                             }

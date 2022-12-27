@@ -19,6 +19,7 @@ class AuthFunctions with ChangeNotifier {
 
   String? frontImgUrl;
   String? backImgUrl;
+  // String? avatarUrl;
   bool accInfoDone = false;
 
   Future googleLogIn() async {
@@ -133,14 +134,33 @@ class AuthFunctions with ChangeNotifier {
     notifyListeners();
   }
 
-  Future checkDoc(String uid) async {
+  Future<bool> checkDoc(String collectionId, String uid) async {
     DocumentSnapshot docSnap =
-        await _fireStore.collection('users').doc(uid).get();
+        await _fireStore.collection(collectionId).doc(uid).get();
     if (docSnap.exists) {
       return true;
     } else {
       return false;
     }
+  }
+
+  void completeProfileCheck() async {
+    getUser();
+    String userId = firebaseUser!.uid;
+    bool check = await checkDoc('accountDetails', userId);
+    (check) ? accInfoDone = true : accInfoDone = false;
+    notifyListeners();
+  }
+
+  Future<String> getAvatarUrl(String uid) async {
+    String avatarUrl = '';
+    await _fireStore
+        .collection('accountDetails')
+        .doc(uid)
+        .get()
+        .then((value) => avatarUrl = value.get('avatarUrl'));
+    notifyListeners();
+    return avatarUrl;
   }
 
   void updateFormTable(String docId, String firstName, String lastName,

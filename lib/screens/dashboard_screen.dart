@@ -1,13 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaspal/modules/rounded_button.dart';
+import 'package:gaspal/screens/avatarDisplay_screen.dart';
 import 'package:gaspal/screens/form_screen.dart';
 import 'package:gaspal/screens/webview_screen.dart';
 import 'package:gaspal/screens/welcome_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:gaspal/modules/constants.dart';
 
@@ -28,6 +27,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return WelcomeScreen();
       },
     ));
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<AuthFunctions>(context, listen: false);
+      provider.completeProfileCheck();
+    });
+    super.initState();
   }
 
   @override
@@ -186,7 +194,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
                             subtitle: Text(
-                              provider.accInfoDone
+                              context.watch<AuthFunctions>().accInfoDone
                                   ? '2 / 2 Completed'
                                   : '0 / 2 Completed',
                               style: const TextStyle(
@@ -296,7 +304,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 5),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                provider.getUser();
+                String userId = provider.firebaseUser!.uid;
+                String? avatarUrl = await provider.getAvatarUrl(userId);
+                print(avatarUrl);
+                if (avatarUrl != '') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AvatarDisplay(avatarUrl: avatarUrl),
+                      ));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.redAccent,
+                      duration: Duration(milliseconds: 1000),
+                      content: Text('No avatar found',
+                          style: TextStyle(
+                            color: kDeepBlue,
+                            fontSize: 15,
+                            fontFamily: 'AudioWide',
+                          )),
+                    ),
+                  );
+                }
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: kSecBlue,
                   elevation: 10,

@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
           final auth = AuthFunctions();
           // GoogleFonts.config.allowRuntimeFetching = false;
           auth.getUser();
+
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: (auth.firebaseUser == null)
