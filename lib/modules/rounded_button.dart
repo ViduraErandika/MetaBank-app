@@ -21,8 +21,11 @@ class RoundedButton extends StatelessWidget {
           height: 42.0,
           child: Text(
             buttonTitle,
-            style:
-                GoogleFonts.lato(color: const Color(0xFF050a30), fontSize: 17),
+            style: const TextStyle(
+              fontSize: 17,
+              color: Colors.black,
+              fontFamily: 'AudioWide',
+            ),
           ),
         ),
       ),

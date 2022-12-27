@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:gaspal/modules/constants.dart';
+import 'package:gaspal/services/firebase_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class GrabImage extends StatefulWidget {
   const GrabImage({Key? key}) : super(key: key);
@@ -215,9 +217,11 @@ class _GrabImageState extends State<GrabImage> {
     setState(() {
       if (frontImgCalled) {
         frontImgUrl = path;
+        Provider.of<AuthFunctions>(context, listen: false).frontImgUrl = path;
         frontImgCalled = false;
       } else if (backImgCalled) {
         backImgUrl = path;
+        Provider.of<AuthFunctions>(context, listen: false).backImgUrl = path;
         backImgCalled = false;
       }
     });

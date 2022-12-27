@@ -1,18 +1,25 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthFunctions with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
+  final _storage = FirebaseStorage.instance;
 
   late User? _firebaseUser;
   late GoogleSignInAccount _user;
 
   GoogleSignInAccount get user => _user;
   User? get firebaseUser => _firebaseUser;
+
+  String? frontImgUrl;
+  String? backImgUrl;
+  bool accInfoDone = false;
 
   Future googleLogIn() async {
     final googleSignIn = GoogleSignIn();
@@ -134,6 +141,33 @@ class AuthFunctions with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  void updateFormTable(String docId, String firstName, String lastName,
+      String email, String phoneNum, String address, String NIC) {
+    _fireStore.collection('accountDetails').doc(docId).set({
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'phoneNum': phoneNum,
+      'address': address,
+      'NIC': NIC,
+    }, SetOptions(merge: true));
+    accInfoDone = true;
+    notifyListeners();
+  }
+
+  void updateAccInfo(String docId, String keyField, String data) {
+    _fireStore.collection('accountDetails').doc(docId).update({
+      keyField: data,
+    });
+    notifyListeners();
+  }
+
+  Future<void> updateStorage(
+      String folderName, String imgName, var file) async {
+    await _storage.ref().child('$folderName/$imgName').putFile(file);
+    notifyListeners();
   }
 
   void updateData(String docId, String keyField, String data) {

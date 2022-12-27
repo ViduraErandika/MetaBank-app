@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaspal/modules/rounded_button.dart';
 import 'package:gaspal/screens/form_screen.dart';
+import 'package:gaspal/screens/webview_screen.dart';
 import 'package:gaspal/screens/welcome_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<AuthFunctions>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xff63cdd7),
@@ -50,11 +52,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 elevation: 15,
                 itemBuilder: (BuildContext bc) => [
                       const PopupMenuItem(
+                          value: 'sign',
                           child: Text("Sign Out",
                               style: TextStyle(
                                 letterSpacing: 1.5,
-                              )),
-                          value: 'sign'),
+                              ))),
                     ],
                 onSelected: (value) {
                   if (value == 'sign') {
@@ -116,7 +118,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 40),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const WebViewScreen(),
+                                        ));
+                                  },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: kSecBlue,
                                       elevation: 10,
@@ -163,8 +172,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const ListTile(
-                            title: Padding(
+                          ListTile(
+                            title: const Padding(
                               padding: EdgeInsets.only(bottom: 8.0),
                               child: Text(
                                 'Complete Your Profile',
@@ -177,14 +186,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
                             subtitle: Text(
-                              '0 / 2 Completed',
-                              style: TextStyle(
+                              provider.accInfoDone
+                                  ? '2 / 2 Completed'
+                                  : '0 / 2 Completed',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontFamily: 'AudioWide',
                               ),
                             ),
-                            trailing: Icon(
+                            trailing: const Icon(
                               Icons.incomplete_circle_outlined,
                               size: 60,
                             ),

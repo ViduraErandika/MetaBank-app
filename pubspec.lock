@@ -240,6 +240,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_webview_pro:
+    dependency: "direct main"
+    description:
+      name: flutter_webview_pro
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1+4"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -595,34 +602,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  webview_flutter:
-    dependency: "direct main"
-    description:
-      name: webview_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.1"
-  webview_flutter_android:
+  webview_pro_android:
     dependency: transitive
     description:
-      name: webview_flutter_android
+      name: webview_pro_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
-  webview_flutter_platform_interface:
+    version: "2.8.3+3"
+  webview_pro_platform_interface:
     dependency: transitive
     description:
-      name: webview_flutter_platform_interface
+      name: webview_pro_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
-  webview_flutter_wkwebview:
+    version: "1.8.1+2"
+  webview_pro_wkwebview:
     dependency: transitive
     description:
-      name: webview_flutter_wkwebview
+      name: webview_pro_wkwebview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "2.7.1+3"
   win32:
     dependency: transitive
     description:

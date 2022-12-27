@@ -176,7 +176,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff63cdd7),
+                              elevation: 10,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)))),
                           onPressed: () async {
                             setState(() {
                               _showSpinner = true;
@@ -201,11 +207,28 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             );
                           },
-                          icon: const Icon(
-                            FontAwesomeIcons.google,
-                            color: Color(0xff63cdd7),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              children: const [
+                                Text('Sign in with ',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontFamily: 'AudioWide',
+                                    )),
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Icon(
+                                    FontAwesomeIcons.google,
+                                    color: Colors.orangeAccent,
+                                    size: 25,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                          iconSize: 48,
                         ),
                       ),
                     ],

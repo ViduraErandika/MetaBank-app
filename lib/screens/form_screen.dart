@@ -1,9 +1,11 @@
 import 'dart:typed_data';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:gaspal/modules/constants.dart';
+import 'package:gaspal/services/firebase_controller.dart';
 import 'package:gaspal/services/grab_image.dart';
+import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
 import 'package:gaspal/modules/constants.dart';
 
@@ -14,12 +16,12 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   int _currentStep = 0;
-  late String firstName;
-  late String lastName;
-  late String email;
-  late int phoneNum;
-  late String address;
-  late String NIC;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phoneNum;
+  String? address;
+  String? NIC;
   Uint8List? signature;
 
   SignatureController controller = SignatureController(
@@ -37,6 +39,7 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<AuthFunctions>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xff63cdd7),
@@ -47,7 +50,30 @@ class _FormScreenState extends State<FormScreen> {
           centerTitle: true,
         ),
         body: CoolStepper(
-          onCompleted: () => Navigator.of(context).pop(),
+          onCompleted: () async {
+            provider.getUser();
+            String userId = provider.firebaseUser!.uid;
+            if (firstName != null &&
+                lastName != null &&
+                email != null &&
+                phoneNum != null &&
+                address != null &&
+                NIC != null) {
+              print('called here');
+              provider.updateFormTable(userId, firstName!, lastName!, email!,
+                  phoneNum!, address!, NIC!);
+            }
+            if (provider.frontImgUrl != null &&
+                provider.backImgUrl != null &&
+                signature != null) {
+              await provider.updateStorage(
+                  userId, '${userId}_NICFront', File(provider.frontImgUrl!));
+              await provider.updateStorage(
+                  userId, '${userId}_NICBack', File(provider.backImgUrl!));
+              provider.updateAccInfo(userId, 'sign', signature!.toString());
+            }
+            Navigator.of(context).pop();
+          },
           config: const CoolStepperConfig(
               icon: Icon(null),
               backText: "",
@@ -103,7 +129,7 @@ class _FormScreenState extends State<FormScreen> {
                     ),
                     TextFormField(
                       onChanged: (value) {
-                        phoneNum = value as int;
+                        phoneNum = value;
                       },
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
@@ -161,7 +187,7 @@ class _FormScreenState extends State<FormScreen> {
                     ),
                     GrabImage(),
                     const SizedBox(
-                      height: 25,
+                      height: 10,
                     ),
                     const Text(
                       'Draw your Signature',
@@ -209,7 +235,7 @@ class _FormScreenState extends State<FormScreen> {
                               size: 45,
                             )),
                         const SizedBox(
-                          width: 30,
+                          width: 20,
                         ),
                         IconButton(
                             iconSize: 45,
