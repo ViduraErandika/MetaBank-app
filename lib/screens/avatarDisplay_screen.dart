@@ -31,9 +31,12 @@ class _AvatarDisplayState extends State<AvatarDisplay> {
         width: 100vw;
         background-color: whitesmoke;
       }
+      model-viewer::part(default-progress-bar) {
+        background-color: #004275;
+      }
      </style>
      <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-     <model-viewer src="${widget.avatarUrl}" camera-controls > </model-viewer>
+     <model-viewer src="${widget.avatarUrl}" camera-controls auto-rotate min-camera-orbit="auto auto 3.938m" min-field-of-view="30deg"> </model-viewer>
     </body>
     </html>
     ''';

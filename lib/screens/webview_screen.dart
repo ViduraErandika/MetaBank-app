@@ -48,7 +48,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   onMessageReceived: (message) {
                     String data = message.message;
                     avatarUrl = data.substring(1, (data.length - 1));
-                    if (avatarUrl.toString().startsWith("http")) {
+                    if (avatarUrl.toString().endsWith("glb")) {
                       provider.getUser();
                       String userId = provider.firebaseUser!.uid;
                       provider.updateAccInfo(userId, 'avatarUrl', avatarUrl);

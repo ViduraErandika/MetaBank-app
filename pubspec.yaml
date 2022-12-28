@@ -51,9 +51,17 @@ dependencies:
   path_provider: ^2.0.11
   block_ui: ^0.0.3
 
+  flutter_native_splash: ^2.2.16
+
 dev_dependencies:
+  flutter_launcher_icons: "^0.11.0"
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  image_path: "images/appIcon.png"
+  min_sdk_android: 19 # android min sdk min:16, default 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
