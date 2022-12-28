@@ -17,6 +17,7 @@ class _AvatarDisplayState extends State<AvatarDisplay> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   late String fileText;
+  bool isLoading = true;
   @override
   void initState() {
     fileText = '''    <!DOCTYPE html>
@@ -54,17 +55,56 @@ class _AvatarDisplayState extends State<AvatarDisplay> {
           style: TextStyle(fontFamily: "AudioWide", color: Color(0xFF050a30)),
         ),
       ),
-      body: WebView(
-        javascriptMode: JavascriptMode.unrestricted,
-        zoomEnabled: false,
-        initialUrl: '',
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-          webViewController.loadUrl(Uri.dataFromString(
-            fileText,
-            mimeType: 'text/html',
-          ).toString());
-        },
+      body: Stack(
+        children: [
+          WebView(
+            javascriptMode: JavascriptMode.unrestricted,
+            zoomEnabled: false,
+            initialUrl: '',
+            onWebViewCreated: (WebViewController webViewController) {
+              _controller.complete(webViewController);
+              webViewController.loadUrl(Uri.dataFromString(
+                fileText,
+                mimeType: 'text/html',
+              ).toString());
+            },
+            onProgress: (int progress) {
+              if (progress == 100) {
+                setState(() {
+                  isLoading = false;
+                });
+              }
+            },
+          ),
+          isLoading
+              ? Stack(
+                  children: [
+                    Container(
+                      color: Color(0xFFF5F5F5),
+                    ),
+                    Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              child: const Text("Loading..",
+                                  style: TextStyle(
+                                    color: kDeepBlue,
+                                    fontSize: 20,
+                                    fontFamily: 'AudioWide',
+                                  ))),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Stack()
+        ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
