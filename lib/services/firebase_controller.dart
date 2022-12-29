@@ -144,6 +144,18 @@ class AuthFunctions with ChangeNotifier {
     }
   }
 
+  Future<bool> checkField(
+      String collectionId, String uid, String keyField) async {
+    DocumentSnapshot docSnap =
+        await _fireStore.collection(collectionId).doc(uid).get();
+    if (docSnap.exists) {
+      if ((docSnap.data() as Map<String?, dynamic>).containsKey(keyField)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void completeProfileCheck() async {
     getUser();
     String userId = firebaseUser!.uid;
@@ -154,12 +166,15 @@ class AuthFunctions with ChangeNotifier {
 
   Future<String> getAvatarUrl(String uid) async {
     String avatarUrl = '';
-    await _fireStore
-        .collection('accountDetails')
-        .doc(uid)
-        .get()
-        .then((value) => avatarUrl = value.get('avatarUrl'));
-    notifyListeners();
+    bool checkAvatarUrl = await checkField('accountDetails', uid, 'avatarUrl');
+    if (checkAvatarUrl) {
+      await _fireStore
+          .collection('accountDetails')
+          .doc(uid)
+          .get()
+          .then((value) => avatarUrl = value.get('avatarUrl'));
+      notifyListeners();
+    }
     return avatarUrl;
   }
 
@@ -178,9 +193,9 @@ class AuthFunctions with ChangeNotifier {
   }
 
   void updateAccInfo(String docId, String keyField, String data) {
-    _fireStore.collection('accountDetails').doc(docId).update({
+    _fireStore.collection('accountDetails').doc(docId).set({
       keyField: data,
-    });
+    }, SetOptions(merge: true));
     notifyListeners();
   }
 
