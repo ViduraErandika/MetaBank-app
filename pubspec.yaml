@@ -50,6 +50,8 @@ dependencies:
   firebase_storage: ^11.0.9
   path_provider: ^2.0.11
   block_ui: ^0.0.3
+  image_gallery_saver: ^1.7.1
+  permission_handler: ^10.2.0
 
   flutter_native_splash: ^2.2.16
 

@@ -19,6 +19,8 @@ class AuthFunctions with ChangeNotifier {
 
   String? frontImgUrl;
   String? backImgUrl;
+  String? signImgUrl;
+
   // String? avatarUrl;
   bool accInfoDone = false;
 

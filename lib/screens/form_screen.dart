@@ -6,6 +6,8 @@ import 'package:cool_stepper/cool_stepper.dart';
 import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:gaspal/services/grab_image.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
 import 'package:gaspal/modules/constants.dart';
@@ -24,6 +26,7 @@ class _FormScreenState extends State<FormScreen> {
   String? address;
   String? NIC;
   Uint8List? signature;
+  String? signImgUrl;
 
   SignatureController controller = SignatureController(
       penStrokeWidth: 3,
@@ -33,9 +36,23 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   void dispose() {
-    // IMPORTANT to dispose of the controller
     controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    _requestPermission();
+    super.initState();
+  }
+
+  _requestPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+    ].request();
+
+    final info = statuses[Permission.storage].toString();
+    print(info);
   }
 
   @override
@@ -93,12 +110,13 @@ class _FormScreenState extends State<FormScreen> {
             }
             if (provider.frontImgUrl != null &&
                 provider.backImgUrl != null &&
-                signature != null) {
+                provider.signImgUrl != null) {
               await provider.updateStorage(
                   userId, '${userId}_NICFront', File(provider.frontImgUrl!));
               await provider.updateStorage(
                   userId, '${userId}_NICBack', File(provider.backImgUrl!));
-              provider.updateAccInfo(userId, 'sign', signature!.toString());
+              await provider.updateStorage(
+                  userId, '${userId}_Signature', File(provider.signImgUrl!));
             }
             BlockUi.hide(context);
             Future.delayed(const Duration(milliseconds: 200), () {
@@ -244,7 +262,22 @@ class _FormScreenState extends State<FormScreen> {
                         IconButton(
                             onPressed: () async {
                               signature = await controller.toPngBytes(
-                                  width: 1000, height: 1000);
+                                  width: 350, height: 200);
+                              if (signature != null) {
+                                final time = DateTime.now().millisecond;
+                                final name = "${time}_signature.png";
+                                final result =
+                                    await ImageGallerySaver.saveImage(
+                                        signature!,
+                                        quality: 100,
+                                        name: name);
+                                final isSuccess = result['isSuccess'];
+                                if (isSuccess) {
+                                  Provider.of<AuthFunctions>(context,
+                                          listen: false)
+                                      .signImgUrl = result['filePath'];
+                                }
+                              }
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   backgroundColor: Colors.green,
