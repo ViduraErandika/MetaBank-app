@@ -195,9 +195,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
                             subtitle: Text(
-                              context.watch<AuthFunctions>().accInfoDoneOne
-                                  ? '2 / 2 Completed'
-                                  : '0 / 2 Completed',
+                              '${context.watch<AuthFunctions>().accountInfoString} Completed',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

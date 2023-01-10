@@ -22,11 +22,12 @@ class AuthFunctions with ChangeNotifier {
   String? signImgUrl;
 
   // String? avatarUrl;
-  bool accInfoDoneOne = false;
-  bool accInfoDoneTwo = false;
-  bool accInfoDoneThree = false;
-  bool accInfoDoneFour = false;
-  bool accInfoDoneFive = false;
+  // bool accInfoDoneOne = false;
+  // bool accInfoDoneTwo = false;
+  // bool accInfoDoneThree = false;
+  // bool accInfoDoneFour = false;
+  // bool accInfoDoneFive = false;
+  String accountInfoString = '0 / 0';
 
   Future googleLogIn() async {
     final googleSignIn = GoogleSignIn();
@@ -165,8 +166,18 @@ class AuthFunctions with ChangeNotifier {
   void completeProfileCheck() async {
     getUser();
     String userId = firebaseUser!.uid;
-    bool check = await checkDoc('accountDetails', userId);
-    (check) ? accInfoDoneOne = true : accInfoDoneOne = false;
+    bool checkOne = await checkField('accountDetails', userId, 'firstName');
+    bool checkTwo = await checkField('accountDetails', userId, 'houseNum');
+    bool checkThree = await checkField('accountDetails', userId, 'branch');
+    if (checkOne && checkTwo && checkThree) {
+      accountInfoString = '5 / 5';
+    } else if (checkOne && !checkTwo && !checkThree) {
+      accountInfoString = '1 / 1';
+    } else if (checkOne && checkTwo && !checkThree) {
+      accountInfoString = '2 / 2';
+    } else {
+      accountInfoString = '0 / 0';
+    }
     notifyListeners();
   }
 
@@ -204,7 +215,7 @@ class AuthFunctions with ChangeNotifier {
       'gender': gender,
       'mStatus': mStatus
     }, SetOptions(merge: true));
-    accInfoDoneOne = true;
+    completeProfileCheck();
     notifyListeners();
   }
 
@@ -218,7 +229,7 @@ class AuthFunctions with ChangeNotifier {
       'resStatus': resStatus,
       'multiNationalId': multiNationalId,
     }, SetOptions(merge: true));
-    accInfoDoneTwo = true;
+    completeProfileCheck();
     notifyListeners();
   }
 
@@ -231,7 +242,7 @@ class AuthFunctions with ChangeNotifier {
       'depositVolume': depositVolume,
       'branch': branch,
     }, SetOptions(merge: true));
-    accInfoDoneThree = true;
+    completeProfileCheck();
     notifyListeners();
   }
 

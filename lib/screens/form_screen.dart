@@ -449,7 +449,6 @@ class _FormScreenState extends State<FormScreen> {
                             onChanged: (value) {
                               city = value;
                             },
-                            keyboardType: TextInputType.phone,
                             decoration: const InputDecoration(
                                 labelText: 'City',
                                 labelStyle: TextStyle(
@@ -465,7 +464,6 @@ class _FormScreenState extends State<FormScreen> {
                             onChanged: (value) {
                               country = value;
                             },
-                            keyboardType: TextInputType.phone,
                             decoration: const InputDecoration(
                                 labelText: 'Country',
                                 labelStyle: TextStyle(
@@ -741,7 +739,7 @@ class _FormScreenState extends State<FormScreen> {
                       height: 15,
                     ),
                     TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.number,
                       onChanged: (value) {
                         depositVolume = value;
                       },
