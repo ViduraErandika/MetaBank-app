@@ -42,6 +42,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             onWebViewCreated: (WebViewController webViewController) {
               _controller.complete(webViewController);
             },
+            zoomEnabled: true,
             javascriptChannels: {
               JavascriptChannel(
                   name: 'ReactNativeWebView',

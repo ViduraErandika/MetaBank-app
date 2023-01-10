@@ -22,7 +22,11 @@ class AuthFunctions with ChangeNotifier {
   String? signImgUrl;
 
   // String? avatarUrl;
-  bool accInfoDone = false;
+  bool accInfoDoneOne = false;
+  bool accInfoDoneTwo = false;
+  bool accInfoDoneThree = false;
+  bool accInfoDoneFour = false;
+  bool accInfoDoneFive = false;
 
   Future googleLogIn() async {
     final googleSignIn = GoogleSignIn();
@@ -162,7 +166,7 @@ class AuthFunctions with ChangeNotifier {
     getUser();
     String userId = firebaseUser!.uid;
     bool check = await checkDoc('accountDetails', userId);
-    (check) ? accInfoDone = true : accInfoDone = false;
+    (check) ? accInfoDoneOne = true : accInfoDoneOne = false;
     notifyListeners();
   }
 
@@ -180,17 +184,54 @@ class AuthFunctions with ChangeNotifier {
     return avatarUrl;
   }
 
-  void updateFormTable(String docId, String firstName, String lastName,
-      String email, String phoneNum, String address, String NIC) {
+  void updateFormTableOne(
+      String docId,
+      String firstName,
+      String lastName,
+      String email,
+      String phoneNum,
+      String phNumPrefix,
+      String dob,
+      String gender,
+      String mStatus) {
     _fireStore.collection('accountDetails').doc(docId).set({
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
       'phoneNum': phoneNum,
-      'address': address,
-      'NIC': NIC,
+      'phNumPrefix': phNumPrefix,
+      'dob': dob,
+      'gender': gender,
+      'mStatus': mStatus
     }, SetOptions(merge: true));
-    accInfoDone = true;
+    accInfoDoneOne = true;
+    notifyListeners();
+  }
+
+  void updateFormTableTwo(String docId, String houseNum, String street,
+      String city, String country, String resStatus, String multiNationalId) {
+    _fireStore.collection('accountDetails').doc(docId).set({
+      'houseNum': houseNum,
+      'street': street,
+      'city': city,
+      'country': country,
+      'resStatus': resStatus,
+      'multiNationalId': multiNationalId,
+    }, SetOptions(merge: true));
+    accInfoDoneTwo = true;
+    notifyListeners();
+  }
+
+  void updateFormTableThree(String docId, String NIC, String occupation,
+      String currency, String depositVolume, String branch) {
+    _fireStore.collection('accountDetails').doc(docId).set({
+      'NIC': NIC,
+      'occupation': occupation,
+      'currency': currency,
+      'depositVolume': depositVolume,
+      'branch': branch,
+    }, SetOptions(merge: true));
+    accInfoDoneThree = true;
     notifyListeners();
   }
 
