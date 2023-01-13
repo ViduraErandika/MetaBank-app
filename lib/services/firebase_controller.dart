@@ -253,8 +253,7 @@ class AuthFunctions with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateStorage(
-      String folderName, String imgName, var file) async {
+  void updateStorage(String folderName, String imgName, var file) async {
     await _storage.ref().child('$folderName/$imgName').putFile(file);
     notifyListeners();
   }

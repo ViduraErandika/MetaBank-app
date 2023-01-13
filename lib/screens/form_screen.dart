@@ -156,15 +156,15 @@ class _FormScreenState extends State<FormScreen> {
                 provider.signImgUrl != null) {
               print(provider.frontImgUrl);
               print(provider.signImgUrl);
-              await provider.updateStorage(
+              provider.updateStorage(
                   userId, '${userId}_NICFront', File(provider.frontImgUrl!));
-              await provider.updateStorage(
+              provider.updateStorage(
                   userId, '${userId}_NICBack', File(provider.backImgUrl!));
-              await provider.updateStorage(
+              provider.updateStorage(
                   userId, '${userId}_Signature', File(provider.signImgUrl!));
             }
             BlockUi.hide(context);
-            Future.delayed(const Duration(milliseconds: 200), () {
+            Future.delayed(const Duration(milliseconds: 300), () {
               Navigator.of(context).pop();
             });
           },
@@ -348,7 +348,7 @@ class _FormScreenState extends State<FormScreen> {
                           width: 115,
                           child: Padding(
                             padding: const EdgeInsets.only(
-                              top: 10.0,
+                              top: 8.0,
                             ),
                             child: Text(
                               'Martial status',
