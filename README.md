@@ -1,6 +1,6 @@
-# gaspal
+# MetaBank-app
 
-A Gas application project.
+A MetaBank-app application project.
 
 ## Getting Started
 
