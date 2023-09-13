@@ -164,7 +164,7 @@ class _FormScreenState extends State<FormScreen> {
                   userId, '${userId}_Signature', File(provider.signImgUrl!));
             }
             BlockUi.hide(context);
-            Future.delayed(const Duration(milliseconds: 300), () {
+            Future.delayed(const Duration(milliseconds: 100), () {
               Navigator.of(context).pop();
             });
           },
