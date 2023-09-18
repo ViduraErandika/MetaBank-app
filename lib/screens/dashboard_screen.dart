@@ -115,7 +115,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               const ListTile(
                                 title: Text(
-                                  'Create New Avatar',
+                                  'Edit Your Avatar',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -185,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             title: const Padding(
                               padding: EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                'Complete Your Profile',
+                                'Start Banking in Metaverse',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -224,7 +224,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)))),
                               child: const Text(
-                                'Edit profile',
+                                'Start Process',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -240,62 +240,62 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Card(
-                    color: kSecRed,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            // topLeft: Radius.circular(50),
-                            topRight: Radius.circular(50),
-                            bottomRight: Radius.circular(50),
-                            bottomLeft: Radius.circular(50))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 13.0, horizontal: 13.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const ListTile(
-                            title: Padding(
-                              padding: EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                'Submit Additional Docs',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontFamily: 'AudioWide',
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 3),
-                              ),
-                            ),
-                            trailing: Icon(
-                              Icons.verified_user,
-                              size: 60,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: kFstred,
-                                  elevation: 10,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10)))),
-                              child: const Text(
-                                'Submit Documents',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontFamily: 'AudioWide',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Card(
+                  //   color: kSecRed,
+                  //   shape: const RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.only(
+                  //           // topLeft: Radius.circular(50),
+                  //           topRight: Radius.circular(50),
+                  //           bottomRight: Radius.circular(50),
+                  //           bottomLeft: Radius.circular(50))),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.symmetric(
+                  //         vertical: 13.0, horizontal: 13.0),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         const ListTile(
+                  //           title: Padding(
+                  //             padding: EdgeInsets.only(bottom: 8.0),
+                  //             child: Text(
+                  //               'Submit Additional Docs',
+                  //               style: TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 18,
+                  //                   fontFamily: 'AudioWide',
+                  //                   fontWeight: FontWeight.bold,
+                  //                   letterSpacing: 3),
+                  //             ),
+                  //           ),
+                  //           trailing: Icon(
+                  //             Icons.verified_user,
+                  //             size: 60,
+                  //           ),
+                  //         ),
+                  //         Padding(
+                  //           padding: const EdgeInsets.only(left: 20),
+                  //           child: ElevatedButton(
+                  //             onPressed: () {},
+                  //             style: ElevatedButton.styleFrom(
+                  //                 backgroundColor: kFstred,
+                  //                 elevation: 10,
+                  //                 shape: const RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.all(
+                  //                         Radius.circular(10)))),
+                  //             child: const Text(
+                  //               'Submit Documents',
+                  //               style: TextStyle(
+                  //                 color: Colors.white,
+                  //                 fontSize: 15,
+                  //                 fontFamily: 'AudioWide',
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ],

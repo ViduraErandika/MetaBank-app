@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gaspal/modules/constants.dart';
 import 'package:flutter_webview_pro/platform_interface.dart';
 import 'package:flutter_webview_pro/webview_flutter.dart';
+import 'package:gaspal/screens/startBank_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +54,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       provider.getUser();
                       String userId = provider.firebaseUser!.uid;
                       provider.updateAccInfo(userId, 'avatarUrl', avatarUrl);
-                      Navigator.of(context).pop();
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const StartBankScreen(),
+                          ));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.green,

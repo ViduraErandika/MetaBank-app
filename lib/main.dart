@@ -5,6 +5,7 @@ import 'package:gaspal/screens/welcome_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:gaspal/screens/start_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +31,7 @@ class MyApp extends StatelessWidget {
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: (auth.firebaseUser == null)
-                ? WelcomeScreen()
-                : const DashboardScreen(),
+            home: (auth.firebaseUser == null) ? WelcomeScreen() : StartScreen(),
           );
         },
       ),
