@@ -86,566 +86,453 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AuthFunctions>(context, listen: false);
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xff63cdd7),
-          title: const Text(
-            "Complete the Form",
-            style: TextStyle(fontFamily: "AudioWide", color: Color(0xFF050a30)),
-          ),
-          centerTitle: true,
-        ),
-        body: CoolStepper(
-          onCompleted: () async {
-            BlockUi.show(
-              context,
-              child: Container(
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        child: const Text("Saving..",
-                            style: TextStyle(
-                              color: kDeepBlue,
-                              fontSize: 20,
-                              fontFamily: 'AudioWide',
-                            ))),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              ),
-            );
-            await provider.getUser();
-            String userId = provider.firebaseUser!.uid;
-            if (firstName != null &&
-                lastName != null &&
-                email != null &&
-                phoneNum != null &&
-                phNumPrefix != null &&
-                dob != null &&
-                mStatus != null) {
-              provider.updateFormTableOne(userId, firstName!, lastName!, email!,
-                  phoneNum!, phNumPrefix!, dob!, gender!, mStatus!);
-            }
-            if (houseNum != null &&
-                street != null &&
-                city != null &&
-                country != null &&
-                resStatus != null) {
-              provider.updateFormTableTwo(userId, houseNum!, street!, city!,
-                  country!, resStatus!, multiNationalId!);
-            }
-            if (NIC != null &&
-                currency != null &&
-                depositVolume != null &&
-                branch != null) {
-              provider.updateFormTableThree(userId, NIC!, occupation!,
-                  currency!, depositVolume!, branch!);
-            }
-            if (provider.frontImgUrl != null &&
-                provider.backImgUrl != null &&
-                provider.signImgUrl != null) {
-              print(provider.frontImgUrl);
-              print(provider.signImgUrl);
-              provider.updateStorage(
-                  userId, '${userId}_NICFront', File(provider.frontImgUrl!));
-              provider.updateStorage(
-                  userId, '${userId}_NICBack', File(provider.backImgUrl!));
-              provider.updateStorage(
-                  userId, '${userId}_Signature', File(provider.signImgUrl!));
-            }
-            BlockUi.hide(context);
-            Future.delayed(const Duration(milliseconds: 100), () {
-              Navigator.of(context).pop();
-            });
-          },
-          config: const CoolStepperConfig(
-              icon: Icon(null),
-              backText: "",
-              titleTextStyle:
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color(0xff63cdd7),
+            title: const Text(
+              "Complete the Form",
+              style:
                   TextStyle(fontFamily: "AudioWide", color: Color(0xFF050a30)),
-              subtitleTextStyle:
-                  TextStyle(fontFamily: "AudioWide", color: Colors.black38)),
-          steps: <CoolStep>[
-            CoolStep(
-                title: "Personal Information",
-                subtitle: "Please fill below details to get started",
-                content: Column(
-                  children: [
-                    TextFormField(
-                      onChanged: (value) {
-                        firstName = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'First name',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //first name
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      onChanged: (value) {
-                        lastName = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Last name',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //last name
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) {
-                              phNumPrefix = value;
-                            },
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                                labelText: 'Phone prefix',
-                                labelStyle: TextStyle(
-                                  fontFamily: "AudioWide",
-                                )),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) {
-                              phoneNum = value;
-                            },
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                                labelText: 'Phone number',
-                                labelStyle: TextStyle(
-                                  fontFamily: "AudioWide",
-                                )),
-                          ),
-                        ),
-                      ],
-                    ), //phone num
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) {
-                        email = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'E-mail',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //email
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      onChanged: (value) {
-                        dob = value;
-                      },
-                      keyboardType: TextInputType.datetime,
-                      decoration: const InputDecoration(
-                          labelText: 'Date of Birth',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //dob
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              'Gender',
-                              textAlign: TextAlign.start,
+            ),
+            centerTitle: false,
+            automaticallyImplyLeading: false,
+          ),
+          body: CoolStepper(
+            onCompleted: () async {
+              BlockUi.show(
+                context,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          child: const Text("Saving..",
                               style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                  fontSize: 18,
-                                  color: Colors.black54),
+                                color: kDeepBlue,
+                                fontSize: 20,
+                                fontFamily: 'AudioWide',
+                              ))),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+              );
+              await provider.getUser();
+              String userId = provider.firebaseUser!.uid;
+              if (firstName != null &&
+                  lastName != null &&
+                  email != null &&
+                  phoneNum != null &&
+                  phNumPrefix != null &&
+                  dob != null &&
+                  mStatus != null) {
+                provider.updateFormTableOne(userId, firstName!, lastName!,
+                    email!, phoneNum!, phNumPrefix!, dob!, gender!, mStatus!);
+              }
+              if (houseNum != null &&
+                  street != null &&
+                  city != null &&
+                  country != null &&
+                  resStatus != null) {
+                provider.updateFormTableTwo(userId, houseNum!, street!, city!,
+                    country!, resStatus!, multiNationalId!);
+              }
+              if (NIC != null &&
+                  currency != null &&
+                  depositVolume != null &&
+                  branch != null) {
+                provider.updateFormTableThree(userId, NIC!, occupation!,
+                    currency!, depositVolume!, branch!);
+              }
+              if (provider.frontImgUrl != null &&
+                  provider.backImgUrl != null &&
+                  provider.signImgUrl != null) {
+                print(provider.frontImgUrl);
+                print(provider.signImgUrl);
+                provider.updateStorage(
+                    userId, '${userId}_NICFront', File(provider.frontImgUrl!));
+                provider.updateStorage(
+                    userId, '${userId}_NICBack', File(provider.backImgUrl!));
+                provider.updateStorage(
+                    userId, '${userId}_Signature', File(provider.signImgUrl!));
+              }
+              BlockUi.hide(context);
+              Future.delayed(const Duration(milliseconds: 100), () {
+                Navigator.of(context).pop();
+              });
+            },
+            config: const CoolStepperConfig(
+                icon: Icon(null),
+                backText: "",
+                titleTextStyle: TextStyle(
+                    fontFamily: "AudioWide", color: Color(0xFF050a30)),
+                subtitleTextStyle:
+                    TextStyle(fontFamily: "AudioWide", color: Colors.black38)),
+            steps: <CoolStep>[
+              CoolStep(
+                  title: "Personal Information",
+                  subtitle: "Please fill below details to get started",
+                  content: Column(
+                    children: [
+                      TextFormField(
+                        onChanged: (value) {
+                          firstName = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'First name',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
+                            )),
+                      ), //first name
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        onChanged: (value) {
+                          lastName = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'Last name',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
+                            )),
+                      ), //last name
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) {
+                                phNumPrefix = value;
+                              },
+                              keyboardType: TextInputType.phone,
+                              decoration: const InputDecoration(
+                                  labelText: 'Phone prefix',
+                                  labelStyle: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  )),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 1,
-                                  groupValue: _genderValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      gender = 'Male';
-                                      print(gender);
-                                      _genderValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Male',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
-                              ),
-                            ],
+                          SizedBox(
+                            width: 10,
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 2,
-                                  groupValue: _genderValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      gender = 'Female';
-                                      _genderValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Female',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ), //gender
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 115,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 8.0,
-                            ),
-                            child: Text(
-                              'Martial status',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                  fontSize: 18,
-                                  color: Colors.black54),
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) {
+                                phoneNum = value;
+                              },
+                              keyboardType: TextInputType.phone,
+                              decoration: const InputDecoration(
+                                  labelText: 'Phone number',
+                                  labelStyle: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  )),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 1,
-                                  groupValue: _mValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      mStatus = 'Married';
-                                      print(mStatus);
-                                      _mValue = value!;
-                                    });
-                                  }),
-                              Text(
-                                'Married',
+                        ],
+                      ), //phone num
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'E-mail',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
+                            )),
+                      ), //email
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        onChanged: (value) {
+                          dob = value;
+                        },
+                        keyboardType: TextInputType.datetime,
+                        decoration: const InputDecoration(
+                            labelText: 'Date of Birth',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
+                            )),
+                      ), //dob
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                'Gender',
+                                textAlign: TextAlign.start,
                                 style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
+                                    fontFamily: "AudioWide",
+                                    fontSize: 18,
+                                    color: Colors.black54),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 2,
-                                  groupValue: _mValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      mStatus = 'Un-married';
-                                      print(mStatus);
-                                      _mValue = value!;
-                                    });
-                                  }),
-                              Text(
-                                'Un-married',
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 1,
+                                    groupValue: _genderValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        gender = 'Male';
+                                        print(gender);
+                                        _genderValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Male',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 2,
+                                    groupValue: _genderValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        gender = 'Female';
+                                        _genderValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Female',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ), //gender
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 115,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                top: 8.0,
+                              ),
+                              child: Text(
+                                'Martial status',
+                                textAlign: TextAlign.start,
                                 style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
+                                    fontFamily: "AudioWide",
+                                    fontSize: 18,
+                                    color: Colors.black54),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 1,
+                                    groupValue: _mValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        mStatus = 'Married';
+                                        print(mStatus);
+                                        _mValue = value!;
+                                      });
+                                    }),
+                                Text(
+                                  'Married',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 2,
+                                    groupValue: _mValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        mStatus = 'Un-married';
+                                        print(mStatus);
+                                        _mValue = value!;
+                                      });
+                                    }),
+                                Text(
+                                  'Un-married',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
 
-                    //martial status
-                  ],
-                ),
-                validation: () {}),
-            CoolStep(
-                title: "Residence Information",
-                subtitle: "Please fill below details to get started",
-                content: Column(
-                  children: [
-                    TextFormField(
-                      onChanged: (value) {
-                        houseNum = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'House Number',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //house num
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      onChanged: (value) {
-                        street = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Street',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //street
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) {
-                              city = value;
-                            },
-                            decoration: const InputDecoration(
-                                labelText: 'City',
-                                labelStyle: TextStyle(
-                                  fontFamily: "AudioWide",
-                                )),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            onChanged: (value) {
-                              country = value;
-                            },
-                            decoration: const InputDecoration(
-                                labelText: 'Country',
-                                labelStyle: TextStyle(
-                                  fontFamily: "AudioWide",
-                                )),
-                          ),
-                        ),
-                      ],
-                    ), //city and country
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    DropdownButton<String>(
-                      hint: Text(
-                        'Status of Residence',
-                        style: TextStyle(fontFamily: "AudioWide", fontSize: 17),
+                      //martial status
+                    ],
+                  ),
+                  validation: () {}),
+              CoolStep(
+                  title: "Residence Information",
+                  subtitle: "Please fill below details to get started",
+                  content: Column(
+                    children: [
+                      TextFormField(
+                        onChanged: (value) {
+                          houseNum = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'House Number',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
+                            )),
+                      ), //house num
+                      const SizedBox(
+                        height: 15,
                       ),
-                      value: _resStatusValue,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(
-                            'Owner',
-                            style: TextStyle(
+                      TextFormField(
+                        onChanged: (value) {
+                          street = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'Street',
+                            labelStyle: TextStyle(
                               fontFamily: "AudioWide",
+                            )),
+                      ), //street
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) {
+                                city = value;
+                              },
+                              decoration: const InputDecoration(
+                                  labelText: 'City',
+                                  labelStyle: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  )),
                             ),
                           ),
-                          value: 'Owner',
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              onChanged: (value) {
+                                country = value;
+                              },
+                              decoration: const InputDecoration(
+                                  labelText: 'Country',
+                                  labelStyle: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ), //city and country
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      DropdownButton<String>(
+                        hint: Text(
+                          'Status of Residence',
+                          style:
+                              TextStyle(fontFamily: "AudioWide", fontSize: 17),
                         ),
-                        DropdownMenuItem(
-                          child: Text(
-                            'Rent',
-                            style: TextStyle(
-                              fontFamily: "AudioWide",
-                            ),
-                          ),
-                          value: 'Rent',
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            'Other',
-                            style: TextStyle(
-                              fontFamily: "AudioWide",
-                            ),
-                          ),
-                          value: 'Other',
-                        )
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          resStatus = value;
-                          print(resStatus);
-                          _resStatusValue = value;
-                        });
-                      },
-                      isExpanded: true,
-                    ), //drop down residence status
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Text(
-                            'Have multiple citizenships?',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
+                        value: _resStatusValue,
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(
+                              'Owner',
+                              style: TextStyle(
                                 fontFamily: "AudioWide",
-                                fontSize: 18,
-                                color: Colors.black54),
+                              ),
+                            ),
+                            value: 'Owner',
                           ),
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.start,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 1,
-                                  groupValue: _multiCitizenBoolValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _multiCitizen = true;
-                                      _multiCitizenBoolValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
+                          DropdownMenuItem(
+                            child: Text(
+                              'Rent',
+                              style: TextStyle(
+                                fontFamily: "AudioWide",
                               ),
-                              Text(
-                                'Yes',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
-                              ),
-                            ],
+                            ),
+                            value: 'Rent',
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 2,
-                                  groupValue: _multiCitizenBoolValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _multiCitizen = false;
-                                      _multiCitizenBoolValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
+                          DropdownMenuItem(
+                            child: Text(
+                              'Other',
+                              style: TextStyle(
+                                fontFamily: "AudioWide",
                               ),
-                              Text(
-                                'No',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    //gender
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    (_multiCitizen)
-                        ? TextFormField(
-                            onChanged: (value) {
-                              multiNationalId = value;
-                            },
-                            keyboardType: TextInputType.datetime,
-                            decoration: const InputDecoration(
-                                labelText: 'Other Nationality ID',
-                                labelStyle: TextStyle(
-                                  fontFamily: "AudioWide",
-                                )),
+                            ),
+                            value: 'Other',
                           )
-                        : SizedBox(
-                            height: 5,
-                          ), //other nationality id if multiple citizen
-                  ],
-                ),
-                validation: () {}),
-            CoolStep(
-                title: "Account Information",
-                subtitle: "Please fill below details to get started",
-                content: Column(
-                  children: [
-                    TextFormField(
-                      onChanged: (value) {
-                        NIC = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'NIC',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //occupation if employed
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Padding(
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            resStatus = value;
+                            print(resStatus);
+                            _resStatusValue = value;
+                          });
+                        },
+                        isExpanded: true,
+                      ), //drop down residence status
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Text(
-                              'Occupied?',
+                              'Have multiple citizenships?',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   fontFamily: "AudioWide",
@@ -653,364 +540,484 @@ class _FormScreenState extends State<FormScreen> {
                                   color: Colors.black54),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 1,
-                                  groupValue: _occupiedBoolValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _occupied = true;
-                                      _occupiedBoolValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Yes',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 1,
+                                    groupValue: _multiCitizenBoolValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _multiCitizen = true;
+                                        _multiCitizenBoolValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 2,
-                                  groupValue: _occupiedBoolValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _occupied = false;
-                                      _occupiedBoolValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'No',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
+                                Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    (_occupied)
-                        ? Column(
-                            children: [
-                              TextFormField(
-                                onChanged: (value) {
-                                  occupation = value;
-                                },
-                                decoration: const InputDecoration(
-                                    labelText: 'Occupation',
-                                    labelStyle: TextStyle(
-                                      fontFamily: "AudioWide",
-                                    )),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                            ],
-                          )
-                        : SizedBox(
-                            height: 5,
-                          ), //occupation
-                    TextFormField(
-                      onChanged: (value) {
-                        currency = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Currency',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //currency
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        depositVolume = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Anticipated deposit volume',
-                          labelStyle: TextStyle(
-                            fontFamily: "AudioWide",
-                          )),
-                    ), //deposit volume better be dropdown
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    DropdownButton<String>(
-                      hint: Text(
-                        'Preferred branch',
-                        style: TextStyle(fontFamily: "AudioWide", fontSize: 17),
-                      ),
-                      value: _branchStatusValue,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(
-                            'Panadura',
-                            style: TextStyle(
-                              fontFamily: "AudioWide",
+                              ],
                             ),
                           ),
-                          value: 'Panadura',
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            'Colombo',
-                            style: TextStyle(
-                              fontFamily: "AudioWide",
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 2,
+                                    groupValue: _multiCitizenBoolValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _multiCitizen = false;
+                                        _multiCitizenBoolValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          value: 'Colombo',
-                        ),
-                        DropdownMenuItem(
-                          child: Text(
-                            'Katubadda',
-                            style: TextStyle(
+                        ],
+                      ),
+                      //gender
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      (_multiCitizen)
+                          ? TextFormField(
+                              onChanged: (value) {
+                                multiNationalId = value;
+                              },
+                              keyboardType: TextInputType.datetime,
+                              decoration: const InputDecoration(
+                                  labelText: 'Other Nationality ID',
+                                  labelStyle: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  )),
+                            )
+                          : SizedBox(
+                              height: 5,
+                            ), //other nationality id if multiple citizen
+                    ],
+                  ),
+                  validation: () {}),
+              CoolStep(
+                  title: "Account Information",
+                  subtitle: "Please fill below details to get started",
+                  content: Column(
+                    children: [
+                      TextFormField(
+                        onChanged: (value) {
+                          NIC = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'NIC',
+                            labelStyle: TextStyle(
                               fontFamily: "AudioWide",
+                            )),
+                      ), //occupation if employed
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                'Occupied?',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                    fontSize: 18,
+                                    color: Colors.black54),
+                              ),
                             ),
                           ),
-                          value: 'Katubadda',
-                        )
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          branch = value;
-                          _branchStatusValue = value;
-                        });
-                      },
-                      isExpanded: true,
-                    ), //drop down branch
-                  ],
-                ),
-                validation: () {}),
-            CoolStep(
-                title: "Legal Documents",
-                subtitle: "Submit below details for use in the Metaverse",
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Submit your NIC',
-                      style: TextStyle(
-                        color: kDeepBlue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'AudioWide',
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 1,
+                                    groupValue: _occupiedBoolValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _occupied = true;
+                                        _occupiedBoolValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 2,
+                                    groupValue: _occupiedBoolValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _occupied = false;
+                                        _occupiedBoolValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GrabImage(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      'Draw your Signature',
-                      style: TextStyle(
-                        color: kDeepBlue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'AudioWide',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Signature(
-                      controller: controller,
-                      width: 350,
-                      height: 200,
-                      backgroundColor: kSecBlue,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            onPressed: () async {
-                              signature = await controller.toPngBytes(
-                                  width: 350, height: 200);
-                              if (signature != null) {
-                                final time = DateTime.now().millisecond;
-                                final name = "${time}_signature.png";
-                                final result =
-                                    await ImageGallerySaver.saveImage(
-                                        signature!,
-                                        quality: 100,
-                                        name: name);
-                                final isSuccess = result['isSuccess'];
-                                print(result);
-                                if (isSuccess) {
-                                  final path =
-                                      result['filePath'].toString().split(':');
-                                  Provider.of<AuthFunctions>(context,
-                                          listen: false)
-                                      .signImgUrl = path.last;
-                                }
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: Colors.green,
-                                  duration: Duration(milliseconds: 500),
-                                  content: Text('Saved',
-                                      style: TextStyle(
-                                        color: kDeepBlue,
-                                        fontSize: 15,
-                                        fontFamily: 'AudioWide',
+                      (_occupied)
+                          ? Column(
+                              children: [
+                                TextFormField(
+                                  onChanged: (value) {
+                                    occupation = value;
+                                  },
+                                  decoration: const InputDecoration(
+                                      labelText: 'Occupation',
+                                      labelStyle: TextStyle(
+                                        fontFamily: "AudioWide",
                                       )),
                                 ),
-                              );
-                            },
-                            iconSize: 45,
-                            tooltip: 'Save signature',
-                            icon: const Icon(
-                              Icons.check_circle,
-                              color: Colors.lightGreenAccent,
-                              size: 45,
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                              ],
+                            )
+                          : SizedBox(
+                              height: 5,
+                            ), //occupation
+                      TextFormField(
+                        onChanged: (value) {
+                          currency = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'Currency',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
                             )),
-                        const SizedBox(
-                          width: 20,
+                      ), //currency
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          depositVolume = value;
+                        },
+                        decoration: const InputDecoration(
+                            labelText: 'Anticipated deposit volume',
+                            labelStyle: TextStyle(
+                              fontFamily: "AudioWide",
+                            )),
+                      ), //deposit volume better be dropdown
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      DropdownButton<String>(
+                        hint: Text(
+                          'Preferred branch',
+                          style:
+                              TextStyle(fontFamily: "AudioWide", fontSize: 17),
                         ),
-                        IconButton(
-                            iconSize: 45,
-                            tooltip: 'Clear signature',
-                            onPressed: () {
-                              controller.clear();
-                            },
-                            icon: const Icon(
-                              Icons.cancel,
-                              color: Colors.redAccent,
-                              size: 45,
-                            ))
-                      ],
-                    )
-                  ],
-                ),
-                validation: () {}),
-            CoolStep(
-                title: "Legel Information",
-                subtitle: "Please fill below details to get started",
-                content: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Text(
-                            'Are you a tax payer?',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
+                        value: _branchStatusValue,
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(
+                              'Panadura',
+                              style: TextStyle(
                                 fontFamily: "AudioWide",
-                                fontSize: 18,
-                                color: Colors.black54),
+                              ),
+                            ),
+                            value: 'Panadura',
                           ),
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.start,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 1,
-                                  groupValue: _taxSelectBoolValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _taxPayer = true;
-                                      _taxSelectBoolValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
+                          DropdownMenuItem(
+                            child: Text(
+                              'Colombo',
+                              style: TextStyle(
+                                fontFamily: "AudioWide",
                               ),
-                              Text(
-                                'Yes',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
-                              ),
-                            ],
+                            ),
+                            value: 'Colombo',
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio<int>(
-                                  value: 2,
-                                  groupValue: _taxSelectBoolValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _taxPayer = false;
-                                      _taxSelectBoolValue = value!;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 10,
+                          DropdownMenuItem(
+                            child: Text(
+                              'Katubadda',
+                              style: TextStyle(
+                                fontFamily: "AudioWide",
                               ),
-                              Text(
-                                'No',
-                                style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    //gender
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    (_taxPayer)
-                        ? TextFormField(
-                            onChanged: (value) {
-                              taxId = value;
-                            },
-                            decoration: const InputDecoration(
-                                labelText: 'Tax file no:',
-                                labelStyle: TextStyle(
-                                  fontFamily: "AudioWide",
-                                )),
+                            ),
+                            value: 'Katubadda',
                           )
-                        : SizedBox(
-                            height: 0,
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            branch = value;
+                            _branchStatusValue = value;
+                          });
+                        },
+                        isExpanded: true,
+                      ), //drop down branch
+                    ],
+                  ),
+                  validation: () {}),
+              CoolStep(
+                  title: "Legal Documents",
+                  subtitle: "Submit below details for use in the Metaverse",
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Submit your NIC',
+                        style: TextStyle(
+                          color: kDeepBlue,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'AudioWide',
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GrabImage(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Draw your Signature',
+                        style: TextStyle(
+                          color: kDeepBlue,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'AudioWide',
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Signature(
+                        controller: controller,
+                        width: 350,
+                        height: 200,
+                        backgroundColor: kSecBlue,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                signature = await controller.toPngBytes(
+                                    width: 350, height: 200);
+                                if (signature != null) {
+                                  final time = DateTime.now().millisecond;
+                                  final name = "${time}_signature.png";
+                                  final result =
+                                      await ImageGallerySaver.saveImage(
+                                          signature!,
+                                          quality: 100,
+                                          name: name);
+                                  final isSuccess = result['isSuccess'];
+                                  print(result);
+                                  if (isSuccess) {
+                                    final path = result['filePath']
+                                        .toString()
+                                        .split(':');
+                                    Provider.of<AuthFunctions>(context,
+                                            listen: false)
+                                        .signImgUrl = path.last;
+                                  }
+                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    backgroundColor: Colors.green,
+                                    duration: Duration(milliseconds: 500),
+                                    content: Text('Saved',
+                                        style: TextStyle(
+                                          color: kDeepBlue,
+                                          fontSize: 15,
+                                          fontFamily: 'AudioWide',
+                                        )),
+                                  ),
+                                );
+                              },
+                              iconSize: 45,
+                              tooltip: 'Save signature',
+                              icon: const Icon(
+                                Icons.check_circle,
+                                color: Colors.lightGreenAccent,
+                                size: 45,
+                              )),
+                          const SizedBox(
+                            width: 20,
                           ),
-                    //tax id if tax payer
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    //terms and condition
-                    //gender
-                    //martial status
-                  ],
-                ),
-                validation: () {}),
-          ],
-        ));
+                          IconButton(
+                              iconSize: 45,
+                              tooltip: 'Clear signature',
+                              onPressed: () {
+                                controller.clear();
+                              },
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.redAccent,
+                                size: 45,
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                  validation: () {}),
+              CoolStep(
+                  title: "Legel Information",
+                  subtitle: "Please fill below details to get started",
+                  content: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              'Are you a tax payer?',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontFamily: "AudioWide",
+                                  fontSize: 18,
+                                  color: Colors.black54),
+                            ),
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 1,
+                                    groupValue: _taxSelectBoolValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _taxPayer = true;
+                                        _taxSelectBoolValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<int>(
+                                    value: 2,
+                                    groupValue: _taxSelectBoolValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _taxPayer = false;
+                                        _taxSelectBoolValue = value!;
+                                      });
+                                    }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      //gender
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      (_taxPayer)
+                          ? TextFormField(
+                              onChanged: (value) {
+                                taxId = value;
+                              },
+                              decoration: const InputDecoration(
+                                  labelText: 'Tax file no:',
+                                  labelStyle: TextStyle(
+                                    fontFamily: "AudioWide",
+                                  )),
+                            )
+                          : SizedBox(
+                              height: 0,
+                            ),
+                      //tax id if tax payer
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      //terms and condition
+                      //gender
+                      //martial status
+                    ],
+                  ),
+                  validation: () {}),
+            ],
+          )),
+    );
   }
 
   tapped(int step) {

@@ -14,6 +14,8 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -74,7 +76,9 @@ class _StartScreenState extends State<StartScreen> {
                       ),
                     );
                   }, const Color(0xff63cdd7), "Start Process"),
-                  Image.asset("images/onboard.png"),
+                  Image.asset(
+                    "images/onboard.png",
+                  ),
                 ],
               ),
             ),

@@ -10,6 +10,7 @@ class StartBankScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -34,18 +35,51 @@ class StartBankScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Center(
-                    child: Text(
-                      "Start Banking in Metaverse",
+                    child: RichText(
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'AudioWide',
-                      ),
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: "Start",
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontFamily: 'AudioWide',
+                          ),
+                        ),
+                        TextSpan(
+                          text: " Banking",
+                          style: TextStyle(
+                            fontSize: 35,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'AudioWide',
+                          ),
+                        ),
+                        TextSpan(
+                          text: " in",
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.black,
+                            fontFamily: 'AudioWide',
+                          ),
+                        ),
+                        TextSpan(
+                          text: " Metaverse",
+                          style: TextStyle(
+                            fontSize: 35,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'AudioWide',
+                          ),
+                        ),
+                      ]),
                     ),
                   ),
-                  Image.asset("images/welcome.png"),
+                  Image.asset(
+                    "images/welcome.png",
+                    height: screenHeight / 2.5,
+                    width: screenHeight / 2.5,
+                  ),
                   RoundedButton(() {
                     Navigator.push(
                       context,
@@ -55,7 +89,7 @@ class StartBankScreen extends StatelessWidget {
                         },
                       ),
                     );
-                  }, Colors.greenAccent, "Get Me In"),
+                  }, Colors.greenAccent, "Take Me In"),
                   RoundedButton(() {
                     Navigator.push(
                       context,
