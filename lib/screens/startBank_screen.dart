@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gaspal/modules/rounded_button.dart';
 import 'package:gaspal/screens/dashboard_screen.dart';
-import 'package:gaspal/screens/form_screen.dart';
+import 'package:gaspal/screens/verify_customer_screen.dart';
 
 class StartBankScreen extends StatelessWidget {
   const StartBankScreen({Key? key}) : super(key: key);
@@ -85,7 +85,7 @@ class StartBankScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return FormScreen();
+                          return VerifyCusScreen();
                         },
                       ),
                     );

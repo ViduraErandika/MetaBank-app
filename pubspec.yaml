@@ -52,7 +52,7 @@ dependencies:
   block_ui: ^0.0.3
   image_gallery_saver: ^1.7.1
   permission_handler: ^10.2.0
-
+  shared_preferences: ^2.2.0
   flutter_native_splash: ^2.2.16
 
 dev_dependencies:

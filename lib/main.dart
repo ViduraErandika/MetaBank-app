@@ -32,7 +32,9 @@ class MyApp extends StatelessWidget {
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: (auth.firebaseUser == null) ? WelcomeScreen() : StartScreen(),
+            home: (auth.firebaseUser == null)
+                ? WelcomeScreen()
+                : StartBankScreen(),
           );
         },
       ),
