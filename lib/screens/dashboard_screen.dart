@@ -115,10 +115,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               const ListTile(
                                 title: Text(
-                                  'Edit Your Avatar',
+                                  'Edit Your \n \t Avatar',
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: 22,
                                       fontFamily: 'AudioWide',
                                       fontWeight: FontWeight.bold,
                                       letterSpacing: 3),
@@ -188,7 +188,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 'Start Banking in Metaverse',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontFamily: 'AudioWide',
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 3),
@@ -203,7 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
                             trailing: const Icon(
-                              Icons.incomplete_circle_outlined,
+                              Icons.account_balance,
                               size: 60,
                             ),
                           ),

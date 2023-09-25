@@ -4,6 +4,7 @@ import 'package:block_ui/block_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:gaspal/modules/constants.dart';
+import 'package:gaspal/screens/dashboard_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:gaspal/services/grab_image.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -164,6 +165,14 @@ class _FormScreenState extends State<FormScreen> {
               BlockUi.hide(context);
               Future.delayed(const Duration(milliseconds: 100), () {
                 Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DashboardScreen();
+                    },
+                  ),
+                );
               });
             },
             config: const CoolStepperConfig(
