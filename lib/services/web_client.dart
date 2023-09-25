@@ -7,7 +7,7 @@ class WebClient with ChangeNotifier {
 
   Future<bool> verifyCustomer(String id) async {
     Uri verifyUrl = Uri.parse(
-        'http://192.168.194.248:9089/irf-test-web/api/v1.0.0/party/api/${id}');
+        'http://192.168.233.248:9089/irf-test-web/api/v1.0.0/party/api/${id}');
     var response = await client.get(verifyUrl);
 
     if (response.statusCode == 200) {

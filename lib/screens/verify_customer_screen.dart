@@ -1,11 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/modules/rounded_button.dart';
 import 'package:gaspal/screens/dashboard_screen.dart';
 import 'package:gaspal/services/web_client.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class VerifyCusScreen extends StatefulWidget {
   const VerifyCusScreen({Key? key}) : super(key: key);
@@ -141,6 +143,8 @@ class _VerifyCusScreenState extends State<VerifyCusScreen> {
                                       await webProvider.verifyCustomer(NIC);
                                   if (verified) {
                                     _showSpinner = false;
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -149,6 +153,54 @@ class _VerifyCusScreenState extends State<VerifyCusScreen> {
                                         },
                                       ),
                                     );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        backgroundColor: Colors.green,
+                                        duration: Duration(milliseconds: 2000),
+                                        content: Text('Successfully Verified',
+                                            style: TextStyle(
+                                              color: kDeepBlue,
+                                              fontSize: 15,
+                                              fontFamily: 'AudioWide',
+                                            )),
+                                      ),
+                                    );
+                                  } else {
+                                    setState(() {
+                                      _showSpinner = false;
+                                    });
+                                    Alert(
+                                      style: const AlertStyle(
+                                          backgroundColor: Colors.white),
+                                      context: context,
+                                      type: AlertType.error,
+                                      title: "NO USER FOUND!",
+                                      desc: "Create Customer Profile First",
+                                      buttons: [
+                                        DialogButton(
+                                          child: const Text(
+                                            "OK",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return VerifyCusScreen();
+                                                },
+                                              ),
+                                            );
+                                          },
+                                          color: Colors.redAccent,
+                                          width: 120,
+                                        )
+                                      ],
+                                    ).show();
                                   }
                                 }
                               }, Colors.amberAccent, "Verify"),
