@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/modules/rounded_button.dart';
 import 'package:gaspal/screens/dashboard_screen.dart';
+import 'package:gaspal/screens/form_screen.dart';
 import 'package:gaspal/services/web_client.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -207,11 +208,12 @@ class _VerifyCusScreenState extends State<VerifyCusScreen> {
                             ],
                           )
                         : RoundedButton(() {
+                            Navigator.pop(context);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return DashboardScreen();
+                                  return FormScreen();
                                 },
                               ),
                             );

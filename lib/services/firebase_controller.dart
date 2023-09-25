@@ -196,15 +196,15 @@ class AuthFunctions with ChangeNotifier {
   }
 
   void updateFormTableOne(
-      String docId,
-      String firstName,
-      String lastName,
-      String email,
-      String phoneNum,
-      String phNumPrefix,
-      String dob,
-      String gender,
-      String mStatus) {
+    String docId,
+    String firstName,
+    String lastName,
+    String email,
+    String phoneNum,
+    String phNumPrefix,
+    String dob,
+    String gender,
+  ) {
     _fireStore.collection('accountDetails').doc(docId).set({
       'firstName': firstName,
       'lastName': lastName,
@@ -212,8 +212,7 @@ class AuthFunctions with ChangeNotifier {
       'phoneNum': phoneNum,
       'phNumPrefix': phNumPrefix,
       'dob': dob,
-      'gender': gender,
-      'mStatus': mStatus
+      'gender': gender
     }, SetOptions(merge: true));
     completeProfileCheck();
     notifyListeners();
@@ -233,14 +232,10 @@ class AuthFunctions with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateFormTableThree(String docId, String NIC, String occupation,
-      String currency, String depositVolume, String branch) {
+  void updateFormTableThree(String docId, String NIC, String occupation) {
     _fireStore.collection('accountDetails').doc(docId).set({
       'NIC': NIC,
       'occupation': occupation,
-      'currency': currency,
-      'depositVolume': depositVolume,
-      'branch': branch,
     }, SetOptions(merge: true));
     completeProfileCheck();
     notifyListeners();

@@ -27,8 +27,8 @@ class _FormScreenState extends State<FormScreen> {
   String? dob;
   String gender = 'Male';
   int _genderValue = 1;
-  String? mStatus = 'Un-married';
-  int _mValue = 2;
+  // String? mStatus = 'Un-married';
+  // int _mValue = 2;
 
   String? houseNum;
   String? street;
@@ -44,10 +44,10 @@ class _FormScreenState extends State<FormScreen> {
   bool _occupied = false;
   int? _occupiedBoolValue;
   String occupation = 'null';
-  String? currency;
-  String? depositVolume;
-  String? branch;
-  String? _branchStatusValue;
+  // String? currency;
+  // String? depositVolume;
+  // String? branch;
+  // String? _branchStatusValue;
 
   Uint8List? signature;
   String? signImgUrl;
@@ -134,10 +134,9 @@ class _FormScreenState extends State<FormScreen> {
                   email != null &&
                   phoneNum != null &&
                   phNumPrefix != null &&
-                  dob != null &&
-                  mStatus != null) {
+                  dob != null) {
                 provider.updateFormTableOne(userId, firstName!, lastName!,
-                    email!, phoneNum!, phNumPrefix!, dob!, gender!, mStatus!);
+                    email!, phoneNum!, phNumPrefix!, dob!, gender!);
               }
               if (houseNum != null &&
                   street != null &&
@@ -147,12 +146,8 @@ class _FormScreenState extends State<FormScreen> {
                 provider.updateFormTableTwo(userId, houseNum!, street!, city!,
                     country!, resStatus!, multiNationalId!);
               }
-              if (NIC != null &&
-                  currency != null &&
-                  depositVolume != null &&
-                  branch != null) {
-                provider.updateFormTableThree(userId, NIC!, occupation!,
-                    currency!, depositVolume!, branch!);
+              if (NIC != null) {
+                provider.updateFormTableThree(userId, NIC!, occupation!);
               }
               if (provider.frontImgUrl != null &&
                   provider.backImgUrl != null &&
@@ -342,73 +337,73 @@ class _FormScreenState extends State<FormScreen> {
                           ),
                         ],
                       ), //gender
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 115,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 8.0,
-                              ),
-                              child: Text(
-                                'Martial status',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    fontFamily: "AudioWide",
-                                    fontSize: 18,
-                                    color: Colors.black54),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Radio<int>(
-                                    value: 1,
-                                    groupValue: _mValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        mStatus = 'Married';
-                                        print(mStatus);
-                                        _mValue = value!;
-                                      });
-                                    }),
-                                Text(
-                                  'Married',
-                                  style: TextStyle(
-                                    fontFamily: "AudioWide",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Radio<int>(
-                                    value: 2,
-                                    groupValue: _mValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        mStatus = 'Un-married';
-                                        print(mStatus);
-                                        _mValue = value!;
-                                      });
-                                    }),
-                                Text(
-                                  'Un-married',
-                                  style: TextStyle(
-                                    fontFamily: "AudioWide",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     Container(
+                      //       width: 115,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(
+                      //           top: 8.0,
+                      //         ),
+                      //         child: Text(
+                      //           'Martial status',
+                      //           textAlign: TextAlign.start,
+                      //           style: TextStyle(
+                      //               fontFamily: "AudioWide",
+                      //               fontSize: 18,
+                      //               color: Colors.black54),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: Row(
+                      //         children: [
+                      //           Radio<int>(
+                      //               value: 1,
+                      //               groupValue: _mValue,
+                      //               onChanged: (value) {
+                      //                 setState(() {
+                      //                   mStatus = 'Married';
+                      //                   print(mStatus);
+                      //                   _mValue = value!;
+                      //                 });
+                      //               }),
+                      //           Text(
+                      //             'Married',
+                      //             style: TextStyle(
+                      //               fontFamily: "AudioWide",
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: Row(
+                      //         children: [
+                      //           Radio<int>(
+                      //               value: 2,
+                      //               groupValue: _mValue,
+                      //               onChanged: (value) {
+                      //                 setState(() {
+                      //                   mStatus = 'Un-married';
+                      //                   print(mStatus);
+                      //                   _mValue = value!;
+                      //                 });
+                      //               }),
+                      //           Text(
+                      //             'Un-married',
+                      //             style: TextStyle(
+                      //               fontFamily: "AudioWide",
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
 
                       //martial status
                     ],
@@ -624,7 +619,7 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   validation: () {}),
               CoolStep(
-                  title: "Account Information",
+                  title: "Security Information",
                   subtitle: "Please fill below details to get started",
                   content: Column(
                     children: [
@@ -729,77 +724,77 @@ class _FormScreenState extends State<FormScreen> {
                           : SizedBox(
                               height: 5,
                             ), //occupation
-                      TextFormField(
-                        onChanged: (value) {
-                          currency = value;
-                        },
-                        decoration: const InputDecoration(
-                            labelText: 'Currency',
-                            labelStyle: TextStyle(
-                              fontFamily: "AudioWide",
-                            )),
-                      ), //currency
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          depositVolume = value;
-                        },
-                        decoration: const InputDecoration(
-                            labelText: 'Anticipated deposit volume',
-                            labelStyle: TextStyle(
-                              fontFamily: "AudioWide",
-                            )),
-                      ), //deposit volume better be dropdown
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      DropdownButton<String>(
-                        hint: Text(
-                          'Preferred branch',
-                          style:
-                              TextStyle(fontFamily: "AudioWide", fontSize: 17),
-                        ),
-                        value: _branchStatusValue,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text(
-                              'Panadura',
-                              style: TextStyle(
-                                fontFamily: "AudioWide",
-                              ),
-                            ),
-                            value: 'Panadura',
-                          ),
-                          DropdownMenuItem(
-                            child: Text(
-                              'Colombo',
-                              style: TextStyle(
-                                fontFamily: "AudioWide",
-                              ),
-                            ),
-                            value: 'Colombo',
-                          ),
-                          DropdownMenuItem(
-                            child: Text(
-                              'Katubadda',
-                              style: TextStyle(
-                                fontFamily: "AudioWide",
-                              ),
-                            ),
-                            value: 'Katubadda',
-                          )
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            branch = value;
-                            _branchStatusValue = value;
-                          });
-                        },
-                        isExpanded: true,
-                      ), //drop down branch
+                      // TextFormField(
+                      //   onChanged: (value) {
+                      //     currency = value;
+                      //   },
+                      //   decoration: const InputDecoration(
+                      //       labelText: 'Currency',
+                      //       labelStyle: TextStyle(
+                      //         fontFamily: "AudioWide",
+                      //       )),
+                      // ), //currency
+                      // const SizedBox(
+                      //   height: 15,
+                      // ),
+                      // TextFormField(
+                      //   keyboardType: TextInputType.number,
+                      //   onChanged: (value) {
+                      //     depositVolume = value;
+                      //   },
+                      //   decoration: const InputDecoration(
+                      //       labelText: 'Anticipated deposit volume',
+                      //       labelStyle: TextStyle(
+                      //         fontFamily: "AudioWide",
+                      //       )),
+                      // ), //deposit volume better be dropdown
+                      // const SizedBox(
+                      //   height: 25,
+                      // ),
+                      // DropdownButton<String>(
+                      //   hint: Text(
+                      //     'Preferred branch',
+                      //     style:
+                      //         TextStyle(fontFamily: "AudioWide", fontSize: 17),
+                      //   ),
+                      //   value: _branchStatusValue,
+                      //   items: [
+                      //     DropdownMenuItem(
+                      //       child: Text(
+                      //         'Panadura',
+                      //         style: TextStyle(
+                      //           fontFamily: "AudioWide",
+                      //         ),
+                      //       ),
+                      //       value: 'Panadura',
+                      //     ),
+                      //     DropdownMenuItem(
+                      //       child: Text(
+                      //         'Colombo',
+                      //         style: TextStyle(
+                      //           fontFamily: "AudioWide",
+                      //         ),
+                      //       ),
+                      //       value: 'Colombo',
+                      //     ),
+                      //     DropdownMenuItem(
+                      //       child: Text(
+                      //         'Katubadda',
+                      //         style: TextStyle(
+                      //           fontFamily: "AudioWide",
+                      //         ),
+                      //       ),
+                      //       value: 'Katubadda',
+                      //     )
+                      //   ],
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       branch = value;
+                      //       _branchStatusValue = value;
+                      //     });
+                      //   },
+                      //   isExpanded: true,
+                      // ), //drop down branch
                     ],
                   ),
                   validation: () {}),
@@ -908,113 +903,113 @@ class _FormScreenState extends State<FormScreen> {
                     ],
                   ),
                   validation: () {}),
-              CoolStep(
-                  title: "Legel Information",
-                  subtitle: "Please fill below details to get started",
-                  content: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              'Are you a tax payer?',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontFamily: "AudioWide",
-                                  fontSize: 18,
-                                  color: Colors.black54),
-                            ),
-                          ),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.start,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Radio<int>(
-                                    value: 1,
-                                    groupValue: _taxSelectBoolValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _taxPayer = true;
-                                        _taxSelectBoolValue = value!;
-                                      });
-                                    }),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                    fontFamily: "AudioWide",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Radio<int>(
-                                    value: 2,
-                                    groupValue: _taxSelectBoolValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _taxPayer = false;
-                                        _taxSelectBoolValue = value!;
-                                      });
-                                    }),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'No',
-                                  style: TextStyle(
-                                    fontFamily: "AudioWide",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      //gender
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      (_taxPayer)
-                          ? TextFormField(
-                              onChanged: (value) {
-                                taxId = value;
-                              },
-                              decoration: const InputDecoration(
-                                  labelText: 'Tax file no:',
-                                  labelStyle: TextStyle(
-                                    fontFamily: "AudioWide",
-                                  )),
-                            )
-                          : SizedBox(
-                              height: 0,
-                            ),
-                      //tax id if tax payer
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      //terms and condition
-                      //gender
-                      //martial status
-                    ],
-                  ),
-                  validation: () {}),
+              // CoolStep(
+              //     title: "Legel Information",
+              //     subtitle: "Please fill below details to get started",
+              //     content: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             Padding(
+              //               padding: const EdgeInsets.only(top: 10.0),
+              //               child: Text(
+              //                 'Are you a tax payer?',
+              //                 textAlign: TextAlign.start,
+              //                 style: TextStyle(
+              //                     fontFamily: "AudioWide",
+              //                     fontSize: 18,
+              //                     color: Colors.black54),
+              //               ),
+              //             ),
+              //           ],
+              //           mainAxisAlignment: MainAxisAlignment.start,
+              //         ),
+              //         const SizedBox(
+              //           height: 15,
+              //         ),
+              //         Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           crossAxisAlignment: CrossAxisAlignment.center,
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: [
+              //             Expanded(
+              //               child: Row(
+              //                 children: [
+              //                   Radio<int>(
+              //                       value: 1,
+              //                       groupValue: _taxSelectBoolValue,
+              //                       onChanged: (value) {
+              //                         setState(() {
+              //                           _taxPayer = true;
+              //                           _taxSelectBoolValue = value!;
+              //                         });
+              //                       }),
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   Text(
+              //                     'Yes',
+              //                     style: TextStyle(
+              //                       fontFamily: "AudioWide",
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //             Expanded(
+              //               child: Row(
+              //                 children: [
+              //                   Radio<int>(
+              //                       value: 2,
+              //                       groupValue: _taxSelectBoolValue,
+              //                       onChanged: (value) {
+              //                         setState(() {
+              //                           _taxPayer = false;
+              //                           _taxSelectBoolValue = value!;
+              //                         });
+              //                       }),
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   Text(
+              //                     'No',
+              //                     style: TextStyle(
+              //                       fontFamily: "AudioWide",
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         //gender
+              //         const SizedBox(
+              //           height: 20,
+              //         ),
+              //         (_taxPayer)
+              //             ? TextFormField(
+              //                 onChanged: (value) {
+              //                   taxId = value;
+              //                 },
+              //                 decoration: const InputDecoration(
+              //                     labelText: 'Tax file no:',
+              //                     labelStyle: TextStyle(
+              //                       fontFamily: "AudioWide",
+              //                     )),
+              //               )
+              //             : SizedBox(
+              //                 height: 0,
+              //               ),
+              //         //tax id if tax payer
+              //         const SizedBox(
+              //           height: 15,
+              //         ),
+              //         //terms and condition
+              //         //gender
+              //         //martial status
+              //       ],
+              //     ),
+              //     validation: () {}),
             ],
           )),
     );
