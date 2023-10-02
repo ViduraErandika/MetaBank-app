@@ -7,6 +7,7 @@ import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/screens/dashboard_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:gaspal/services/grab_image.dart';
+import 'package:gaspal/services/web_client.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,8 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  late String customerID;
+
   int _currentStep = 0;
   String? firstName;
   String? lastName;
@@ -86,7 +89,8 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<AuthFunctions>(context, listen: false);
+    final authProvider = Provider.of<AuthFunctions>(context, listen: false);
+    final webProvider = Provider.of<WebClient>(context, listen: false);
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -128,15 +132,15 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                 ),
               );
-              await provider.getUser();
-              String userId = provider.firebaseUser!.uid;
+              await authProvider.getUser();
+              String userId = authProvider.firebaseUser!.uid;
               if (firstName != null &&
                   lastName != null &&
                   email != null &&
                   phoneNum != null &&
                   phNumPrefix != null &&
                   dob != null) {
-                provider.updateFormTableOne(userId, firstName!, lastName!,
+                authProvider.updateFormTableOne(userId, firstName!, lastName!,
                     email!, phoneNum!, phNumPrefix!, dob!, gender!);
               }
               if (houseNum != null &&
@@ -144,36 +148,74 @@ class _FormScreenState extends State<FormScreen> {
                   city != null &&
                   country != null &&
                   resStatus != null) {
-                provider.updateFormTableTwo(userId, houseNum!, street!, city!,
-                    country!, resStatus!, multiNationalId!);
+                authProvider.updateFormTableTwo(userId, houseNum!, street!,
+                    city!, country!, resStatus!, multiNationalId!);
               }
               if (NIC != null) {
-                provider.updateFormTableThree(userId, NIC!, occupation!);
+                authProvider.updateFormTableThree(userId, NIC!, occupation!);
               }
-              if (provider.frontImgUrl != null &&
-                  provider.backImgUrl != null &&
-                  provider.signImgUrl != null) {
-                print(provider.frontImgUrl);
-                print(provider.signImgUrl);
-                provider.updateStorage(
-                    userId, '${userId}_NICFront', File(provider.frontImgUrl!));
-                provider.updateStorage(
-                    userId, '${userId}_NICBack', File(provider.backImgUrl!));
-                provider.updateStorage(
-                    userId, '${userId}_Signature', File(provider.signImgUrl!));
+              if (authProvider.frontImgUrl != null &&
+                  authProvider.backImgUrl != null &&
+                  authProvider.signImgUrl != null) {
+                print(authProvider.frontImgUrl);
+                print(authProvider.signImgUrl);
+                authProvider.updateStorage(userId, '${userId}_NICFront',
+                    File(authProvider.frontImgUrl!));
+                authProvider.updateStorage(userId, '${userId}_NICBack',
+                    File(authProvider.backImgUrl!));
+                authProvider.updateStorage(userId, '${userId}_Signature',
+                    File(authProvider.signImgUrl!));
               }
-              BlockUi.hide(context);
-              Future.delayed(const Duration(milliseconds: 100), () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DashboardScreen();
-                    },
-                  ),
-                );
-              });
+              // Making the API call
+              if (firstName != null &&
+                  lastName != null &&
+                  email != null &&
+                  phoneNum != null &&
+                  phNumPrefix != null &&
+                  dob != null &&
+                  houseNum != null &&
+                  street != null &&
+                  city != null &&
+                  country != null &&
+                  resStatus != null &&
+                  NIC != null) {
+                Map<String, dynamic> customer = {
+                  "body": {
+                    "mnemonic": firstName?.toUpperCase(),
+                    "shortName": firstName,
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "GENDER": gender,
+                    "phoneNumber": "${phNumPrefix} ${phoneNum}",
+                    "email": email,
+                    "dateOfBirth": dob,
+                    "address": "${houseNum}, ${street}, ${city}, ${country}",
+                    "legalId": NIC,
+                    "sectorId": "1001",
+                    "language": "1"
+                  }
+                };
+                Map response = await webProvider.createCustomer(customer);
+                if (response["status"] == "success") {
+                  customerID = response["id"];
+                  authProvider.updateAccInfo(userId, "customerID", customerID);
+                  BlockUi.hide(context);
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return DashboardScreen();
+                        },
+                      ),
+                    );
+                  });
+                } else {
+                  BlockUi.hide(context);
+                  print(response["override"]["overrideDetails"]);
+                }
+              }
             },
             config: const CoolStepperConfig(
                 icon: Icon(null),

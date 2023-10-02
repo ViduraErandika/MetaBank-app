@@ -172,8 +172,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: kThdBlue,
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50),
                             topRight: Radius.circular(50),
+                            bottomLeft: Radius.circular(50),
                             bottomRight: Radius.circular(50))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -204,7 +204,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             trailing: const Icon(
                               Icons.account_balance,
-                              size: 60,
+                              size: 70,
                             ),
                           ),
                           Padding(
