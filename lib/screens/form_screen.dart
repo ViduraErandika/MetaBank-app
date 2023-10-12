@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/screens/dashboard_screen.dart';
+import 'package:gaspal/screens/verify_customer_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:gaspal/services/grab_image.dart';
 import 'package:gaspal/services/web_client.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:signature/signature.dart';
 import 'package:gaspal/modules/constants.dart';
 
@@ -179,13 +181,13 @@ class _FormScreenState extends State<FormScreen> {
                   country != null &&
                   resStatus != null &&
                   NIC != null) {
-                Map<String, dynamic> customer = {
+                String customer = {
                   "body": {
                     "mnemonic": firstName?.toUpperCase(),
                     "shortName": firstName,
                     "firstName": firstName,
                     "lastName": lastName,
-                    "GENDER": gender,
+                    "GENDER": gender.toUpperCase(),
                     "phoneNumber": "${phNumPrefix} ${phoneNum}",
                     "email": email,
                     "dateOfBirth": dob,
@@ -194,8 +196,9 @@ class _FormScreenState extends State<FormScreen> {
                     "sectorId": "1001",
                     "language": "1"
                   }
-                };
-                Map response = await webProvider.createCustomer(customer);
+                }.toString();
+                Map<String, dynamic> response =
+                    await webProvider.createCustomer(customer);
                 if (response["status"] == "success") {
                   customerID = response["id"];
                   authProvider.updateAccInfo(userId, "customerID", customerID);
@@ -213,6 +216,35 @@ class _FormScreenState extends State<FormScreen> {
                   });
                 } else {
                   BlockUi.hide(context);
+                  Alert(
+                    style: const AlertStyle(backgroundColor: Colors.white),
+                    context: context,
+                    type: AlertType.error,
+                    title: "ERROR",
+                    desc: "Contact Administration",
+                    buttons: [
+                      DialogButton(
+                        child: const Text(
+                          "OK",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return VerifyCusScreen();
+                              },
+                            ),
+                          );
+                        },
+                        color: Colors.redAccent,
+                        width: 120,
+                      )
+                    ],
+                  ).show();
                   print(response["override"]["overrideDetails"]);
                 }
               }

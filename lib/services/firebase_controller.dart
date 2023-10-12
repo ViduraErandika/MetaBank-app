@@ -168,15 +168,15 @@ class AuthFunctions with ChangeNotifier {
     String userId = firebaseUser!.uid;
     bool checkOne = await checkField('accountDetails', userId, 'firstName');
     bool checkTwo = await checkField('accountDetails', userId, 'houseNum');
-    bool checkThree = await checkField('accountDetails', userId, 'branch');
+    bool checkThree = await checkField('accountDetails', userId, 'NIC');
     if (checkOne && checkTwo && checkThree) {
-      accountInfoString = '5 / 5';
+      accountInfoString = '3 / 3';
     } else if (checkOne && !checkTwo && !checkThree) {
-      accountInfoString = '1 / 1';
+      accountInfoString = '2 / 3';
     } else if (checkOne && checkTwo && !checkThree) {
-      accountInfoString = '2 / 2';
+      accountInfoString = '1 / 3';
     } else {
-      accountInfoString = '0 / 0';
+      accountInfoString = '0 / 3';
     }
     notifyListeners();
   }
