@@ -181,24 +181,37 @@ class _FormScreenState extends State<FormScreen> {
                   country != null &&
                   resStatus != null &&
                   NIC != null) {
-                String customer = {
-                  "body": {
-                    "mnemonic": firstName?.toUpperCase(),
-                    "shortName": firstName,
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "GENDER": gender.toUpperCase(),
-                    "phoneNumber": "${phNumPrefix} ${phoneNum}",
-                    "email": email,
-                    "dateOfBirth": dob,
-                    "address": "${houseNum}, ${street}, ${city}, ${country}",
-                    "legalId": NIC,
-                    "sectorId": "1001",
-                    "language": "1"
-                  }
-                }.toString();
+                print('called here');
+                print(NIC);
+                // String customer = {
+                //   "body": {
+                //     "mnemonic": firstName?.toUpperCase(),
+                //     "shortName": firstName,
+                //     "firstName": firstName,
+                //     "lastName": lastName,
+                //     "GENDER": gender.toUpperCase(),
+                //     "phoneNumber": "${phNumPrefix} ${phoneNum}",
+                //     "email": email,
+                //     "dateOfBirth": dob,
+                //     "address": "${houseNum}, ${street}, ${city}, ${country}",
+                //     "legalId": NIC.toString(),
+                //     "sectorId": "1001",
+                //     "language": "1"
+                //   }
+                // }.toString();
                 Map<String, dynamic> response =
-                    await webProvider.createCustomer(customer);
+                    await webProvider.createCustomer(
+                  mnemonic: firstName?.toUpperCase(),
+                  shortName: firstName,
+                  firstname: firstName,
+                  lastName: lastName,
+                  gender: gender.toUpperCase(),
+                  phNum: "${phNumPrefix} ${phoneNum}",
+                  email: email,
+                  dob: dob,
+                  address: "${houseNum}, ${street}, ${city}, ${country}",
+                  nic: NIC,
+                );
                 if (response["status"] == "success") {
                   customerID = response["id"];
                   authProvider.updateAccInfo(userId, "customerID", customerID);
