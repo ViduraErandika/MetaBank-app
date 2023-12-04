@@ -110,7 +110,7 @@ class _VerifyCusScreenState extends State<VerifyCusScreen> {
                                   key: _nicPass,
                                   child: TextFormField(
                                     onChanged: (value) {
-                                      NIC = value;
+                                      NIC = value.toString();
                                     },
                                     validator: (text) {
                                       if (text == null || text.isEmpty) {
@@ -136,7 +136,7 @@ class _VerifyCusScreenState extends State<VerifyCusScreen> {
                               ),
                               RoundedButton(() async {
                                 if (_saveForm()) {
-                                  print("true");
+                                  print("vrfy started");
                                   setState(() {
                                     _showSpinner = true;
                                   });

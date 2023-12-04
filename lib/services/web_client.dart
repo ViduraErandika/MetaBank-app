@@ -10,12 +10,18 @@ class WebClient with ChangeNotifier {
 
   Future<bool> verifyCustomer(String id) async {
     Uri verifyUrl = Uri.parse(
-        'http://192.168.92.248:9089/irf-test-web/api/v1.0.0/party/api/${id}');
+        'http://34.124.140.185:9089/irf-test-web/api/v1.0.0/party/api/${id}');
+    print(verifyUrl);
+    print("1");
     var response = await client.get(verifyUrl);
+    print("2");
+    print(response);
 
     if (response.statusCode == 200) {
       bankAccountVerified = true;
-      print(response.body);
+      // Map<dynamic, dynamic> data = json.decode(response.body);
+      print("verified");
+      // print(data["body"]);
       return true;
     } else {
       bankAccountVerified = false;
@@ -37,7 +43,7 @@ class WebClient with ChangeNotifier {
     required String? nic,
   }) async {
     Uri verifyUrl = Uri.parse(
-        'http://192.168.92.248:9089/irf-test-web/api/v1.0.0/party/customers');
+        'http://34.124.140.185:9089/irf-test-web/api/v1.0.0/party/customers');
 
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST', verifyUrl);

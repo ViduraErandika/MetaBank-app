@@ -13,6 +13,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 import 'package:gaspal/modules/constants.dart';
 
@@ -62,6 +63,8 @@ class _FormScreenState extends State<FormScreen> {
   int? _taxSelectBoolValue;
   String taxId = 'null';
 
+  late final SharedPreferences prefs;
+
   SignatureController controller = SignatureController(
       penStrokeWidth: 3,
       penColor: kDeepBlue,
@@ -75,8 +78,9 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   @override
-  void initState() {
+  Future<void> initState() async {
     _requestPermission();
+    prefs = await SharedPreferences.getInstance();
     super.initState();
   }
 
@@ -181,24 +185,6 @@ class _FormScreenState extends State<FormScreen> {
                   country != null &&
                   resStatus != null &&
                   NIC != null) {
-                print('called here');
-                print(NIC);
-                // String customer = {
-                //   "body": {
-                //     "mnemonic": firstName?.toUpperCase(),
-                //     "shortName": firstName,
-                //     "firstName": firstName,
-                //     "lastName": lastName,
-                //     "GENDER": gender.toUpperCase(),
-                //     "phoneNumber": "${phNumPrefix} ${phoneNum}",
-                //     "email": email,
-                //     "dateOfBirth": dob,
-                //     "address": "${houseNum}, ${street}, ${city}, ${country}",
-                //     "legalId": NIC.toString(),
-                //     "sectorId": "1001",
-                //     "language": "1"
-                //   }
-                // }.toString();
                 Map<String, dynamic> response =
                     await webProvider.createCustomer(
                   mnemonic: firstName?.toUpperCase(),
@@ -215,6 +201,7 @@ class _FormScreenState extends State<FormScreen> {
                 if (response["status"] == "success") {
                   customerID = response["id"];
                   authProvider.updateAccInfo(userId, "customerID", customerID);
+                  await prefs.setString('customerID', customerID);
                   BlockUi.hide(context);
                   Future.delayed(const Duration(milliseconds: 100), () {
                     Navigator.of(context).pop();

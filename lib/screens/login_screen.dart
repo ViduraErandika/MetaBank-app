@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:gaspal/modules/constants.dart';
 import 'package:gaspal/modules/rounded_button.dart';
+import 'package:gaspal/screens/start_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -140,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const DashboardScreen(),
+                              builder: (context) => const StartScreen(),
                             ));
                       } else {
                         setState(() {
@@ -204,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DashboardScreen(),
+                                builder: (context) => StartScreen(),
                               ),
                             );
                           },
