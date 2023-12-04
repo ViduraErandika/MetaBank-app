@@ -10,6 +10,7 @@ import 'package:gaspal/screens/welcome_screen.dart';
 import 'package:gaspal/services/firebase_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:gaspal/modules/constants.dart';
+import 'package:gaspal/screens/form_screen_add_docs.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -240,62 +241,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Card(
-                  //   color: kSecRed,
-                  //   shape: const RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.only(
-                  //           // topLeft: Radius.circular(50),
-                  //           topRight: Radius.circular(50),
-                  //           bottomRight: Radius.circular(50),
-                  //           bottomLeft: Radius.circular(50))),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.symmetric(
-                  //         vertical: 13.0, horizontal: 13.0),
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         const ListTile(
-                  //           title: Padding(
-                  //             padding: EdgeInsets.only(bottom: 8.0),
-                  //             child: Text(
-                  //               'Submit Additional Docs',
-                  //               style: TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontSize: 18,
-                  //                   fontFamily: 'AudioWide',
-                  //                   fontWeight: FontWeight.bold,
-                  //                   letterSpacing: 3),
-                  //             ),
-                  //           ),
-                  //           trailing: Icon(
-                  //             Icons.verified_user,
-                  //             size: 60,
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.only(left: 20),
-                  //           child: ElevatedButton(
-                  //             onPressed: () {},
-                  //             style: ElevatedButton.styleFrom(
-                  //                 backgroundColor: kFstred,
-                  //                 elevation: 10,
-                  //                 shape: const RoundedRectangleBorder(
-                  //                     borderRadius: BorderRadius.all(
-                  //                         Radius.circular(10)))),
-                  //             child: const Text(
-                  //               'Submit Documents',
-                  //               style: TextStyle(
-                  //                 color: Colors.white,
-                  //                 fontSize: 15,
-                  //                 fontFamily: 'AudioWide',
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  Card(
+                    color: kSecRed,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            // topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                            bottomLeft: Radius.circular(50))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 13.0, horizontal: 13.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const ListTile(
+                            title: Padding(
+                              padding: EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                'Submit Additional Verification Docs',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontFamily: 'AudioWide',
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 3),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.verified_user,
+                              size: 60,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return AddFormScreen();
+                                  },
+                                ));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: kFstred,
+                                  elevation: 10,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)))),
+                              child: const Text(
+                                'Submit Documents',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontFamily: 'AudioWide',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],

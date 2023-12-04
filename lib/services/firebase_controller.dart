@@ -27,7 +27,7 @@ class AuthFunctions with ChangeNotifier {
   // bool accInfoDoneThree = false;
   // bool accInfoDoneFour = false;
   // bool accInfoDoneFive = false;
-  String accountInfoString = '0 / 0';
+  String accountInfoString = '0 / 3';
 
   Future googleLogIn() async {
     final googleSignIn = GoogleSignIn();

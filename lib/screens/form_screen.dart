@@ -78,10 +78,12 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   @override
-  Future<void> initState() async {
+  void initState() {
     _requestPermission();
-    prefs = await SharedPreferences.getInstance();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      prefs = await SharedPreferences.getInstance();
+    });
   }
 
   _requestPermission() async {
@@ -214,7 +216,7 @@ class _FormScreenState extends State<FormScreen> {
                       ),
                     );
                   });
-                } else {
+                } else if (response["status"] == "failed") {
                   BlockUi.hide(context);
                   Alert(
                     style: const AlertStyle(backgroundColor: Colors.white),
@@ -247,6 +249,19 @@ class _FormScreenState extends State<FormScreen> {
                   ).show();
                   print(response["override"]["overrideDetails"]);
                 }
+              } else {
+                BlockUi.hide(context);
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return DashboardScreen();
+                      },
+                    ),
+                  );
+                });
               }
             },
             config: const CoolStepperConfig(
@@ -878,111 +893,6 @@ class _FormScreenState extends State<FormScreen> {
                       //   },
                       //   isExpanded: true,
                       // ), //drop down branch
-                    ],
-                  ),
-                  validation: () {}),
-              CoolStep(
-                  title: "Legal Documents",
-                  subtitle: "Submit below details for use in the Metaverse",
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Submit your NIC',
-                        style: TextStyle(
-                          color: kDeepBlue,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'AudioWide',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GrabImage(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Draw your Signature',
-                        style: TextStyle(
-                          color: kDeepBlue,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'AudioWide',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Signature(
-                        controller: controller,
-                        width: 350,
-                        height: 200,
-                        backgroundColor: kSecBlue,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () async {
-                                signature = await controller.toPngBytes(
-                                    width: 350, height: 200);
-                                if (signature != null) {
-                                  final time = DateTime.now().millisecond;
-                                  final name = "${time}_signature.png";
-                                  final result =
-                                      await ImageGallerySaver.saveImage(
-                                          signature!,
-                                          quality: 100,
-                                          name: name);
-                                  final isSuccess = result['isSuccess'];
-                                  print(result);
-                                  if (isSuccess) {
-                                    final path = result['filePath']
-                                        .toString()
-                                        .split(':');
-                                    Provider.of<AuthFunctions>(context,
-                                            listen: false)
-                                        .signImgUrl = path.last;
-                                  }
-                                }
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    backgroundColor: Colors.green,
-                                    duration: Duration(milliseconds: 500),
-                                    content: Text('Saved',
-                                        style: TextStyle(
-                                          color: kDeepBlue,
-                                          fontSize: 15,
-                                          fontFamily: 'AudioWide',
-                                        )),
-                                  ),
-                                );
-                              },
-                              iconSize: 45,
-                              tooltip: 'Save signature',
-                              icon: const Icon(
-                                Icons.check_circle,
-                                color: Colors.lightGreenAccent,
-                                size: 45,
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          IconButton(
-                              iconSize: 45,
-                              tooltip: 'Clear signature',
-                              onPressed: () {
-                                controller.clear();
-                              },
-                              icon: const Icon(
-                                Icons.cancel,
-                                color: Colors.redAccent,
-                                size: 45,
-                              ))
-                        ],
-                      )
                     ],
                   ),
                   validation: () {}),
